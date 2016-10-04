@@ -1,0 +1,12 @@
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\Server.exe.config
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\Server.exe
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\Server.pdb
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\MongoDB.Bson.dll
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\MongoDB.Driver.Core.dll
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\MongoDB.Driver.dll
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\MongoDB.Bson.xml
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\MongoDB.Driver.xml
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\bin\Debug\MongoDB.Driver.Core.xml
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\obj\Debug\Server.csprojResolveAssemblyReference.cache
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\obj\Debug\Server.exe
+\\psf\home\documents\visual studio 2015\Projects\Server\Server\obj\Debug\Server.pdb
