@@ -1,0 +1,12 @@
+{
+    "name": "mashaka/insta-grabber",
+    "require": {
+        "bolandish/instagram-grabber": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "Maria Sandrikova",
+            "email": "mashasandrikova@gmail.com"
+        }
+    ]
+}
