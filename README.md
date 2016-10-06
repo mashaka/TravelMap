@@ -6,6 +6,7 @@ Our Travel Map can help you to:
 - Share your "have been maps"
 - Find out which countries are most popular among other people
 - Recieve personal recommendations for your future trips
+  - Train data for recommendations was gathered with help of [Instagram-Grabber library](https://github.com/Bolandish/Instagram-Grabber) 
 
 We have a web-version and an Android application.
 
