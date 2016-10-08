@@ -1,20 +1,14 @@
 import utilities
 import os.path
-from geopy.geocoders import Nominatim
+import osm_rg
 
 DATA_DIR = 'dataInstagram'
 RESULT_DIR = 'dataInstagramCountries'
 
 LOCATION = 'location'
-
 COUNTRY = 'country'
-TYPES = 'types'
-RESULTS = 'results'
-ADDRESS_COMPONENTS = 'address_components'
-LONG_NAME = 'long_name'
 LAT = 'lat'
 LONG = 'lng'
-
 TXT_SUFFIX = '.txt'
 
 
@@ -33,40 +27,35 @@ def read_all_jsons():
     return locations
 
 
-def save_in_files(lists):
+def save_in_file(data_list, name):
     if not os.path.exists(RESULT_DIR):
         os.makedirs(RESULT_DIR)
-    for i, data_list in enumerate(lists):
-        with open(os.path.join(RESULT_DIR, str(i) + TXT_SUFFIX), mode='wt') as f:
-            for data in data_list:
-                f.write(data + '\n')
+    with open(os.path.join(RESULT_DIR, name + TXT_SUFFIX), mode='wt') as f:
+        for data in data_list:
+            f.write(data + '\n')
 
 
 def get_country(lat, long):
-    lat_long_str = "%d, %d" % (lat, long)
-    geolocator = Nominatim()
-    address, (latitude, longitude) = geolocator.reverse(lat_long_str, language='en')
-    if address:
-        address = address.split(",")
-        if len(address) > 2:
-            return address[-1].strip()
-    return False
+    if not lat or not long:
+        return False
+    lat_long = (float(lat), float(long))
+    results = osm_rg.get(lat_long)
+    return results[COUNTRY]
 
 
 def extract_countries(data_list):
     result_list = []
-    for coordinates_list in data_list:
+    for i, coordinates_list in enumerate(data_list):
         countries = []
         for coordinates in coordinates_list:
             country = get_country(coordinates[LAT], coordinates[LONG])
             if country:
                 countries.append(country)
         if len(countries) > 0:
+            save_in_file(countries, str(i))
             result_list.append(countries)
     return result_list
 
 locations_lists = read_all_jsons()
 
 countries_list = extract_countries(locations_lists)
-
-save_in_files(countries_list)
