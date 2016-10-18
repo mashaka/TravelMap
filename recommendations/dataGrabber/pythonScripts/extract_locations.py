@@ -9,7 +9,6 @@ LOCATION = 'location'
 COUNTRY = 'country'
 LAT = 'lat'
 LONG = 'lng'
-TXT_SUFFIX = '.txt'
 
 
 def read_all_jsons():
@@ -25,14 +24,6 @@ def read_all_jsons():
         if len(user_locations) > 0:
             locations.append(user_locations)
     return locations
-
-
-def save_in_file(data_list, name):
-    if not os.path.exists(RESULT_DIR):
-        os.makedirs(RESULT_DIR)
-    with open(os.path.join(RESULT_DIR, name + TXT_SUFFIX), mode='wt') as f:
-        for data in data_list:
-            f.write(data + '\n')
 
 
 def get_country(lat, long):
@@ -52,9 +43,10 @@ def extract_countries(data_list):
             if country:
                 countries.append(country)
         if len(countries) > 0:
-            save_in_file(countries, str(i))
+            utilities.save_in_file(countries, str(i), RESULT_DIR)
             result_list.append(countries)
     return result_list
+
 
 locations_lists = read_all_jsons()
 
