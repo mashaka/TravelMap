@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorView from "../views/ErrorView"
 
 export default class App extends React.Component{
 
@@ -6,6 +7,7 @@ export default class App extends React.Component{
         return (
             <div>
                 {this.props.children}
+                <ErrorView hideError={true} />
             </div>
         );
     }
