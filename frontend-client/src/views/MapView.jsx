@@ -1,13 +1,14 @@
 import React from "react"
-import 'react-mdl/extra/material.css';
-import 'react-mdl/extra/material.js';
 import "../styles/MapView.scss"
-import { Button } from "react-mdl"
+import "jquery"
+import "materialize-css/bin/materialize.js"
+import "materialize-css/bin/materialize.css"
+import { Button } from "react-materialize"
 
 export default class MapView extends React.Component {
     render() {
         return (
-            <Button raised accent ripple>Button</Button>
+            <Button waves='light'>Button</Button>
         )
     }
 }
