@@ -32,7 +32,6 @@
     "react": "^15.2.1",
     "react-addons-linked-state-mixin": "^15.2.1",
     "react-dom": "^15.2.1",
-    "react-materialize": "^0.17.0",
     "react-mixin": "^3.0.5",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.2",

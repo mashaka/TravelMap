@@ -1,0 +1,21 @@
+$nav-bar-size: 64px;
+
+#side-bar {
+    top: $nav-bar-size;
+    z-index: -1;
+}
+
+.profile-dropdown__image {
+    $img-v-margin: 0.25 * $nav-bar-size;
+    height: #{0.5 * $nav-bar-size};
+    margin: $img-v-margin 15px $img-v-margin 0;
+    float: left;
+}
+
+#profile-dropdown__menu {
+    top: $nav-bar-size !important;
+}
+
+nav {
+    padding-left: 10px;
+}

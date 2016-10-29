@@ -5,6 +5,7 @@ var HtmlwebpackPlugin = require('html-webpack-plugin');
 
 var ROOT_PATH = path.resolve(__dirname);
 
+/* TODO(dubov94): make it sync with webpack.config.js. */
 module.exports = {
     entry: [
         path.resolve(ROOT_PATH, 'src/index')
