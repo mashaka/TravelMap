@@ -14,6 +14,10 @@ module.exports = {
         loaders: [
             {
                 test: /\.jsx?$/,
+                loader: 'imports?jQuery=jquery,$=jquery'
+            },
+            {
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loaders: ['react-hot', 'babel-loader']
             },

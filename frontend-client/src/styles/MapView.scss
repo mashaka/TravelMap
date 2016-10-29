@@ -1,4 +1,5 @@
 $nav-bar-size: 64px;
+$side-bar-size: 300px;
 
 #side-bar {
     top: $nav-bar-size;
@@ -18,4 +19,12 @@ $nav-bar-size: 64px;
 
 nav {
     padding-left: 10px;
+}
+
+#world-map {
+    position: fixed;
+    top: $nav-bar-size;
+    right: 0;
+    bottom: 0;
+    left: $side-bar-size;
 }

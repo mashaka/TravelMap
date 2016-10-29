@@ -1,9 +1,12 @@
 import React from "react"
 import "../styles/Fonts.scss"
 import "materialize-css/bin/materialize.css"
+import "jvectormap/jquery-jvectormap.css"
 import "../styles/MapView.scss"
-import "jquery"
 import "materialize-css/bin/materialize.js"
+import "jvectormap/jquery-jvectormap.min.js"
+import "../constants/jquery-jvectormap-world-mill.js"
+
 
 /* TODO(dubov94): set up for small screens. */
 export default class MapView extends React.Component {
@@ -42,7 +45,12 @@ export default class MapView extends React.Component {
                         </ul>
                     </div>
                 </nav>
+                <div id="world-map"></div>
             </div>
         )
+    }
+
+    componentDidMount() {
+        $("#world-map").vectorMap({map: "world_mill"})
     }
 }
