@@ -45,12 +45,7 @@ export default class MapView extends React.Component {
                         </ul>
                     </div>
                 </nav>
-                <div id="world-map"></div>
             </div>
         )
-    }
-
-    componentDidMount() {
-        $("#world-map").vectorMap({map: "world_mill"})
     }
 }
