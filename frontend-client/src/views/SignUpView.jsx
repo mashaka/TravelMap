@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as authActions from "../actions/authActions"
 import { bindActionCreators } from 'redux'
 import ErrorView from "./ErrorView"
+import SignUpForm from "../components/SignUpForm"
 
 @connect(
     (state) => ({
@@ -27,26 +28,11 @@ export default class SignUpView extends React.Component {
     render() {
         return(
             <div>
-                <h1> Registration form </h1>
-                {this.props.statusText ? <p>{this.props.statusText}</p> : ''}
-                <form type="submit">
-                <div>
-                    <input type="text" placeholder="NickName" ref={(input)=>this.nickname=input} />
-                </div>
-                <div>
-                    <input type="text" placeholder="e-mail" ref={(input)=>this.email=input} />
-                </div>
-                <div>
-                    <input type="password" placeholder="Password" ref={(input)=>this.password=input} />
-                </div>
-                <div>
-                    <button type="submit"
-                            disabled={this.props.pending}
-                            onClick={this.register.bind(this)}>
-                        Enter
-                    </button>
-                </div>
-                </form>
+                <SignUpForm nickname ={this.nickname}
+                            email ={this.email}
+                            password ={this.password}
+                            registrationCallBack ={this.register.bind(this)}
+                            pending={this.props.pending}/>
                 {this.props.error ?
                     <ErrorView /> : ''}
             </div>

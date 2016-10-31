@@ -12,5 +12,6 @@ export default(
         <Route path="login" component={LoginView} />
         <Route path="signup" component={SignUpView} />
         <Route path="map" component={MapView} />
+        <Route path="home" />
     </Route>
 );

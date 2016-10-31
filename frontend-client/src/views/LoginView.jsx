@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as authActions from "../actions/authActions"
 import { bindActionCreators } from 'redux'
 import ErrorView from "./ErrorView"
+import LoginForm from "../components/LoginForm"
 
 @connect(
     (state) => ({
@@ -34,23 +35,10 @@ export default class LoginView extends React.Component {
     render() {
         return(
             <div>
-                <h1> Login form </h1>
-                {this.props.statusText ? <p>{this.props.statusText}</p> : ''}
-                <form type="submit">
-                <div>
-                    <input type="text" placeholder="Login" ref={(input)=>this.login=input} />
-                </div>
-                <div>
-                    <input type="password" placeholder="Password" ref={(input)=>this.password=input} />
-                </div>
-                <div>
-                    <button type="submit"
-                            disabled={this.props.isAuthenticating}
-                            onClick={this.enter.bind(this)}>
-                        Enter
-                    </button>
-                </div>
-                </form>
+                <LoginForm login={this.login}
+                           password={this.password}
+                           loginCallback={this.enter.bind(this)}
+                           isDisabled={this.props.isAuthenticating} />
                 {this.props.error ?
                     <ErrorView /> : ''}
             </div>
