@@ -1,11 +1,18 @@
 import os.path
 import utilities
 import numpy as np
+import csv
 
 COUNTRIES_INFO = 'countryInfo.txt'
 
 DATA_DIR = 'dataCountriesRefactored'
 OUTPUT_FILE = 'train.csv'
+
+
+def write_in_file(data):
+    with open(OUTPUT_FILE, 'w', newline='') as f:
+        csv_writer = csv.writer(f, delimiter=' ')
+        csv_writer.writerows(data)
 
 
 def read_countries_dict_and_list():
@@ -35,3 +42,6 @@ def prepare_data():
         converted_info += visited_countries
         converted_data.append(converted_info)
     return converted_data
+
+
+write_in_file(prepare_data())
