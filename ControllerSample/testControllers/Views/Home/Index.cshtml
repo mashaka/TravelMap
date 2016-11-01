@@ -1,0 +1,80 @@
+﻿
+<div id="tableBlock"></div>
+<div id="editBlock">
+    <p><b>Тест</b></p>
+    <table>
+        <tr><td><input type="hidden" id="editId" /></td><td></td></tr>
+        <tr><td><label>Имя: </label></td><td><input type="text" id="editName" /></td></tr>
+        <tr><td><label>Фамилие: </label></td><td><input type="text" id="editSurname" /></td></tr>
+        <tr><td><label>Возвраст: </label></td><td><input type="number" id="editAge" /></td></tr>
+    </table>
+
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+        GetAllPersons();
+    });
+    // Получение всех книг по ajax-запросу
+    function GetAllPersons() {
+
+        $("#createBlock").css('display', 'block');
+        $("#editBlock").css('display', 'none');
+        $.ajax({
+            url: '/api/register',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                WriteResponse(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+ // вывод полученных данных на экран
+    function WriteResponse(persons) {
+        var strResult = "<table><th>ID</th><th>Имя</th><th>Фамилия</th><th>Возраст</th>";
+        $.each(persons, function (index, person) {
+            strResult += "<tr><td>" + person.Id + "</td><td> " + person.Name + "</td><td>" +
+            person.Surname + "</td><td>" + person.Age;
+        });
+        strResult += "</table>";
+        $("#tableBlock").html(strResult);
+
+    }
+
+    // вывод данных редактируемой книги в поля для редактирования
+    function ShowPerson(person) {
+        if (person != null) {
+            $("#createBlock").css('display', 'none');
+            $("#editBlock").css('display', 'block');
+            $("#editId").val(person.Id);
+            $("#editName").val(person.Name);
+            $("#editSurname").val(person.Author);
+            $("#editAge").val(person.Year);
+        }
+        else {
+            alert("Такой перец не существует");
+        }
+    }
+    // запрос книги на редактирование
+    function GetPerson(id) {
+        $.ajax({
+            url: '/api/register/' + id,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                ShowPerson(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+    </script>
+}
