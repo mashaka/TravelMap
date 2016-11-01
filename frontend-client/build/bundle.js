@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bc9381e5046a0e1b8bca"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7b406ece4e73f8f9e72a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -612,7 +612,7 @@
 	
 	var _reactRouter = __webpack_require__(187);
 	
-	var _configureStore2 = __webpack_require__(334);
+	var _configureStore2 = __webpack_require__(339);
 	
 	var _configureStore3 = _interopRequireDefault(_configureStore2);
 	
@@ -33687,6 +33687,10 @@
 	
 	var _MapView2 = _interopRequireDefault(_MapView);
 	
+	var _UserProfileView = __webpack_require__(334);
+	
+	var _UserProfileView2 = _interopRequireDefault(_UserProfileView);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createElement(
@@ -33696,7 +33700,7 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: "login", component: _LoginView2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: "signup", component: _SignUpView2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: "map", component: _MapView2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: "home" })
+	    _react2.default.createElement(_reactRouter.Route, { path: "home", component: _UserProfileView2.default })
 	);
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -41753,9 +41757,6 @@
 	var SIGNUP_USER_REQUEST = _constants2.default.SIGNUP_USER_REQUEST;
 	var SIGNUP_USER_FAILURE = _constants2.default.SIGNUP_USER_FAILURE;
 	var SIGNUP_USER_SUCCESS = _constants2.default.SIGNUP_USER_SUCCESS;
-	var UPDATE_USER_INFO_PASSWORD_REQUEST = _constants2.default.UPDATE_USER_INFO_PASSWORD_REQUEST;
-	var UPDATE_USER_INFO_PASSWORD_FAILURE = _constants2.default.UPDATE_USER_INFO_PASSWORD_FAILURE;
-	var UPDATE_USER_INFO_PASSWORD_SUCCESS = _constants2.default.UPDATE_USER_INFO_PASSWORD_SUCCESS;
 	function loginUserSuccess(token, nickName) {
 	    localStorage.setItem("auth", JSON.stringify({ "token": token, "nickName": nickName }));
 	    return {
@@ -41891,7 +41892,10 @@
 	"LOGIN_USER_REQUEST", "LOGIN_USER_FAILURE", "LOGIN_USER_SUCCESS", "LOGOUT_USER",
 	
 	//Signup actings
-	"SIGNUP_USER_REQUEST", "SIGNUP_USER_FAILURE", "SIGNUP_USER_SUCCESS"), {
+	"SIGNUP_USER_REQUEST", "SIGNUP_USER_FAILURE", "SIGNUP_USER_SUCCESS",
+	
+	// User profile actions
+	"FETCH_USER_INFO_REQUEST", "FETCH_USER_INFO_ERROR", "FETCH_USER_INFO_SUCCESS", "CHANGE_USER_PASSWORD_REQUEST", "CHANGE_USER_PASSWORD_FAILURE", "CHANGE_USER_PASSWORD_SUCCESS", "CHANGE_USER_EMAIL_REQUEST", "CHANGE_USER_EMAIL_FAILURE", "CHANGE_USER_EMAIL_SUCCESS", "RESET_USER_STATE"), {
 	    // Root api url
 	    APIURL: null // waiting for backend
 	});
@@ -56635,57 +56639,113 @@
 	
 	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 	
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = configureStore;
+	exports.default = undefined;
 	
-	var _reducers = __webpack_require__(335);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _reducers2 = _interopRequireDefault(_reducers);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _reduxThunk = __webpack_require__(338);
+	var _dec, _class;
 	
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	var _react = __webpack_require__(83);
 	
-	var _routes = __webpack_require__(186);
+	var _react2 = _interopRequireDefault(_react);
 	
-	var _routes2 = _interopRequireDefault(_routes);
+	var _reactRedux = __webpack_require__(252);
 	
-	var _reactRouterRedux = __webpack_require__(287);
+	var _userActions = __webpack_require__(335);
+	
+	var userActions = _interopRequireWildcard(_userActions);
 	
 	var _redux = __webpack_require__(259);
 	
-	var _reduxLogger = __webpack_require__(339);
+	var _UserInfo = __webpack_require__(336);
 	
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+	var _UserInfo2 = _interopRequireDefault(_UserInfo);
+	
+	var _ChangePasswordForm = __webpack_require__(337);
+	
+	var _ChangePasswordForm2 = _interopRequireDefault(_ChangePasswordForm);
+	
+	var _ChangeEmailForm = __webpack_require__(338);
+	
+	var _ChangeEmailForm2 = _interopRequireDefault(_ChangeEmailForm);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function configureStore(baseHistory, initialState) {
-	    var routingMiddleware = (0, _reactRouterRedux.routerMiddleware)(baseHistory);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	    var logger = (0, _reduxLogger2.default)();
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	    var middleware = (0, _redux.applyMiddleware)(routingMiddleware, _reduxThunk2.default, logger);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	    var store = (0, _redux.createStore)(_reducers2.default, initialState, middleware);
+	var UserProfileView = (_dec = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        user: state.user,
+	        token: state.auth.token,
+	        name: state.auth.nickName
+	    };
+	}, function (dispatch) {
+	    return {
+	        actions: (0, _redux.bindActionCreators)(userActions, dispatch)
+	    };
+	}), _dec(_class = function (_React$Component) {
+	    _inherits(UserProfileView, _React$Component);
 	
-	    var history = (0, _reactRouterRedux.syncHistoryWithStore)(baseHistory, store);
+	    function UserProfileView() {
+	        _classCallCheck(this, UserProfileView);
 	
-	    if (true) {
-	        module.hot.accept(335, function () {
-	            var nextRootReducer = __webpack_require__(335);
-	            store.replaceReducer(nextRootReducer);
-	        });
+	        return _possibleConstructorReturn(this, (UserProfileView.__proto__ || Object.getPrototypeOf(UserProfileView)).apply(this, arguments));
 	    }
 	
-	    return { store: store, history: history };
-	}
+	    _createClass(UserProfileView, [{
+	        key: "loadUserInfo",
+	        value: function loadUserInfo() {
+	            this.props.actions.loadUserInfo(this.props.token);
+	        }
+	    }, {
+	        key: "resetState",
+	        value: function resetState() {
+	            this.props.actions.resetState();
+	        }
+	    }, {
+	        key: "changePassword",
+	        value: function changePassword(oldPassword, newPassword) {
+	            this.props.actions.changePassword(this.props.token, oldPassword, newPassword);
+	        }
+	    }, {
+	        key: "changeEmail",
+	        value: function changeEmail(newEmail) {
+	            this.props.actions.changeEmail(this.props.token, newEmail);
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(_UserInfo2.default, _extends({ userName: this.props.name
+	                }, this.props.user)),
+	                _react2.default.createElement(_ChangeEmailForm2.default, _extends({ changeEmailCallback: this.changeEmail.bind(this)
+	                }, this.props.user)),
+	                _react2.default.createElement(_ChangePasswordForm2.default, _extends({ changePasswordCallback: this.changePassword.bind(this)
+	                }, this.props.user))
+	            );
+	        }
+	    }]);
 	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "configureStore.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	    return UserProfileView;
+	}(_react2.default.Component)) || _class);
+	exports.default = UserProfileView;
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "UserProfileView.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
@@ -56699,28 +56759,134 @@
 	
 	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 	
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.loadUserInfo = loadUserInfo;
+	exports.changePassword = changePassword;
+	exports.changeEmail = changeEmail;
+	exports.resetState = resetState;
 	
-	var _redux = __webpack_require__(259);
+	var _constants = __webpack_require__(280);
 	
-	var _reactRouterRedux = __webpack_require__(287);
+	var _constants2 = _interopRequireDefault(_constants);
 	
-	var _auth = __webpack_require__(336);
+	var _isomorphicFetch = __webpack_require__(285);
 	
-	var _auth2 = _interopRequireDefault(_auth);
+	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+	
+	var _errorsActions = __webpack_require__(292);
+	
+	var errorActions = _interopRequireWildcard(_errorsActions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = (0, _redux.combineReducers)({
-	    routing: _reactRouterRedux.routerReducer,
-	    auth: _auth2.default
-	});
+	var addErrorRespondStatus = errorActions.addErrorRespondStatus;
+	var errorInHttpRequest = errorActions.errorInHttpRequest;
+	var FETCH_USER_INFO_REQUEST = _constants2.default.FETCH_USER_INFO_REQUEST;
+	var FETCH_USER_INFO_ERROR = _constants2.default.FETCH_USER_INFO_ERROR;
+	var FETCH_USER_INFO_SUCCESS = _constants2.default.FETCH_USER_INFO_SUCCESS;
+	var APIURL = _constants2.default.APIURL;
+	var CHANGE_USER_PASSWORD_REQUEST = _constants2.default.CHANGE_USER_PASSWORD_REQUEST;
+	var CHANGE_USER_PASSWORD_FAILURE = _constants2.default.CHANGE_USER_PASSWORD_FAILURE;
+	var CHANGE_USER_PASSWORD_SUCCESS = _constants2.default.CHANGE_USER_PASSWORD_SUCCESS;
+	var CHANGE_USER_EMAIL_REQUEST = _constants2.default.CHANGE_USER_EMAIL_REQUEST;
+	var CHANGE_USER_EMAIL_FAILURE = _constants2.default.CHANGE_USER_EMAIL_FAILURE;
+	var CHANGE_USER_EMAIL_SUCCESS = _constants2.default.CHANGE_USER_EMAIL_SUCCESS;
+	var RESET_USER_STATE = _constants2.default.RESET_USER_STATE;
+	function loadUserInfo(token) {
+	    return function (dispatch) {
+	        dispatch({ type: FETCH_USER_INFO_REQUEST });
+	        return (0, _isomorphicFetch2.default)(APIURL + "/users", {
+	            method: "GET",
+	            headers: {
+	                "Accept": "application/json",
+	                "Content-type": "application/json",
+	                "authorization": "Bearer " + token
+	            }
+	        }).then(function (response) {
+	            if (response.status !== 201) {
+	                dispatch(addErrorRespondStatus(response.status));
+	            }
+	            return response.json();
+	        }).then(function (response) {
+	            if (response && response["message"]) {
+	                dispatch({ type: FETCH_USER_INFO_ERROR });
+	                dispatch(errorInHttpRequest(response));
+	            } else {
+	                dispatch({ type: FETCH_USER_INFO_SUCCESS, payload: response });
+	            }
+	        });
+	    };
+	}
 	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	function changePassword(token, oldPassword, newPassword) {
+	    return function (dispatch) {
+	        dispatch({ type: CHANGE_USER_PASSWORD_REQUEST });
+	        return (0, _isomorphicFetch2.default)(APIURL + "/password", {
+	            method: "POST",
+	            headers: {
+	                "Accept": "application/json",
+	                "Content-type": "application/json",
+	                "authorization": "Bearer " + token
+	            },
+	            body: JSON.stringify({ old: oldPassword, new: newPassword })
+	        }).then(function (response) {
+	            if (response.status === 201) {
+	                dispatch({ type: CHANGE_USER_PASSWORD_SUCCESS });
+	                return null;
+	            } else {
+	                dispatch(addErrorRespondStatus(response.status));
+	                return response.json();
+	            }
+	        }).then(function (response) {
+	            if (response && response["accessToken"]) {
+	                dispatch({ type: CHANGE_USER_PASSWORD_FAILURE });
+	                dispatch(errorInHttpRequest(response));
+	            }
+	        });
+	    };
+	}
+	
+	function changeEmail(token, newEmail) {
+	    return function (dispatch) {
+	        dispatch({ type: CHANGE_USER_EMAIL_REQUEST });
+	        return (0, _isomorphicFetch2.default)(APIURL + "/password", {
+	            method: "POST",
+	            headers: {
+	                "Accept": "application/json",
+	                "Content-type": "application/json",
+	                "authorization": "Bearer " + token
+	            },
+	            body: JSON.stringify({ email: newEmail })
+	        }).then(function (response) {
+	            if (response.status === 201) {
+	                dispatch({ type: CHANGE_USER_EMAIL_SUCCESS });
+	                return null;
+	            } else {
+	                dispatch(addErrorRespondStatus(response.status));
+	                return response.json();
+	            }
+	        }).then(function (response) {
+	            if (response && response["accessToken"]) {
+	                dispatch({ type: CHANGE_USER_EMAIL_FAILURE });
+	                dispatch(errorInHttpRequest(response));
+	            }
+	        });
+	    };
+	}
+	
+	function resetState() {
+	    return {
+	        type: RESET_USER_STATE
+	    };
+	}
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "userActions.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
@@ -56740,9 +56906,354 @@
 	    value: true
 	});
 	
+	var _react = __webpack_require__(83);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var UserInfo = function UserInfo(_ref) {
+	    var userName = _ref.userName;
+	    var email = _ref.email;
+	    var gender = _ref.gender;
+	    var age = _ref.age;
+	    var locale = _ref.locale;
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "h1",
+	            null,
+	            " User profile "
+	        ),
+	        _react2.default.createElement(
+	            "p",
+	            null,
+	            "User: ",
+	            userName
+	        ),
+	        _react2.default.createElement(
+	            "p",
+	            null,
+	            "Email: ",
+	            email
+	        ),
+	        _react2.default.createElement(
+	            "p",
+	            null,
+	            "Gender: ",
+	            gender
+	        ),
+	        _react2.default.createElement(
+	            "p",
+	            null,
+	            "Age: ",
+	            age
+	        ),
+	        _react2.default.createElement(
+	            "p",
+	            null,
+	            "Locale: ",
+	            locale
+	        )
+	    );
+	};
+	
+	exports.default = UserInfo;
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "UserInfo.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 337 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/*** IMPORTS FROM imports-loader ***/
+	var jQuery = __webpack_require__(3);
+	var $ = __webpack_require__(3);
+	
+	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(83);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ErrorView = __webpack_require__(251);
+	
+	var _ErrorView2 = _interopRequireDefault(_ErrorView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ChangePasswordForm = function ChangePasswordForm(_ref) {
+	    var changePasswordCallback = _ref.changePasswordCallback;
+	    var changingPassword = _ref.changingPassword;
+	    var errorChangingPassword = _ref.errorChangingPassword;
+	    var changingPasswordSuccess = _ref.changingPasswordSuccess;
+	
+	    var newPassword = void 0;
+	    var oldPassword = void 0;
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "h1",
+	            null,
+	            "Change password"
+	        ),
+	        _react2.default.createElement(
+	            "form",
+	            { type: "submit", onSubmit: function onSubmit(e) {
+	                    e.preventDefault();
+	                    changePasswordCallback(oldPassword.value, newPassword.value);
+	                    oldPassword.value = "";
+	                    newPassword.value = "";
+	                } },
+	            _react2.default.createElement(
+	                "div",
+	                null,
+	                "Old password:",
+	                _react2.default.createElement("input", { type: "text", ref: function ref(input) {
+	                        return oldPassword = input;
+	                    } })
+	            ),
+	            _react2.default.createElement(
+	                "div",
+	                null,
+	                "New password:",
+	                _react2.default.createElement("input", { type: "text", ref: function ref(input) {
+	                        return newPassword = input;
+	                    } })
+	            ),
+	            _react2.default.createElement(
+	                "button",
+	                { type: "submit",
+	                    disabled: changingPassword },
+	                "Change"
+	            )
+	        ),
+	        errorChangingPassword ? _react2.default.createElement(_ErrorView2.default, null) : '',
+	        changingPasswordSuccess ? _react2.default.createElement(
+	            "p",
+	            null,
+	            " Your password was successfully changed. "
+	        ) : ''
+	    );
+	};
+	
+	exports.default = ChangePasswordForm;
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "ChangePasswordForm.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 338 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/*** IMPORTS FROM imports-loader ***/
+	var jQuery = __webpack_require__(3);
+	var $ = __webpack_require__(3);
+	
+	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(83);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ErrorView = __webpack_require__(251);
+	
+	var _ErrorView2 = _interopRequireDefault(_ErrorView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ChangeEmailForm = function ChangeEmailForm(_ref) {
+	    var changeEmailCallback = _ref.changeEmailCallback;
+	    var changingEmail = _ref.changingEmail;
+	    var errorChangingEmail = _ref.errorChangingEmail;
+	    var changingEmailSuccess = _ref.changingEmailSuccess;
+	
+	    var newEmail = void 0;
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "h1",
+	            null,
+	            "Change email"
+	        ),
+	        _react2.default.createElement(
+	            "form",
+	            { type: "submit", onSubmit: function onSubmit(e) {
+	                    e.preventDefault();
+	                    changeEmailCallback(newEmail.value);
+	                    newEmail.value = "";
+	                } },
+	            _react2.default.createElement("input", { type: "text", ref: function ref(input) {
+	                    return newEmail = input;
+	                } }),
+	            _react2.default.createElement(
+	                "button",
+	                { type: "submit",
+	                    disabled: changingEmail },
+	                "Change"
+	            )
+	        ),
+	        errorChangingEmail ? _react2.default.createElement(_ErrorView2.default, null) : '',
+	        changingEmailSuccess ? _react2.default.createElement(
+	            "p",
+	            null,
+	            " Confirmation letter was sent to new email address. "
+	        ) : ''
+	    );
+	};
+	
+	exports.default = ChangeEmailForm;
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "ChangeEmailForm.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 339 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/*** IMPORTS FROM imports-loader ***/
+	var jQuery = __webpack_require__(3);
+	var $ = __webpack_require__(3);
+	
+	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = configureStore;
+	
+	var _reducers = __webpack_require__(340);
+	
+	var _reducers2 = _interopRequireDefault(_reducers);
+	
+	var _reduxThunk = __webpack_require__(345);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _routes = __webpack_require__(186);
+	
+	var _routes2 = _interopRequireDefault(_routes);
+	
+	var _reactRouterRedux = __webpack_require__(287);
+	
+	var _redux = __webpack_require__(259);
+	
+	var _reduxLogger = __webpack_require__(346);
+	
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function configureStore(baseHistory, initialState) {
+	    var routingMiddleware = (0, _reactRouterRedux.routerMiddleware)(baseHistory);
+	
+	    var logger = (0, _reduxLogger2.default)();
+	
+	    var middleware = (0, _redux.applyMiddleware)(routingMiddleware, _reduxThunk2.default, logger);
+	
+	    var store = (0, _redux.createStore)(_reducers2.default, initialState, middleware);
+	
+	    var history = (0, _reactRouterRedux.syncHistoryWithStore)(baseHistory, store);
+	
+	    if (true) {
+	        module.hot.accept(340, function () {
+	            var nextRootReducer = __webpack_require__(340);
+	            store.replaceReducer(nextRootReducer);
+	        });
+	    }
+	
+	    return { store: store, history: history };
+	}
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "configureStore.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 340 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/*** IMPORTS FROM imports-loader ***/
+	var jQuery = __webpack_require__(3);
+	var $ = __webpack_require__(3);
+	
+	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _redux = __webpack_require__(259);
+	
+	var _reactRouterRedux = __webpack_require__(287);
+	
+	var _auth = __webpack_require__(341);
+	
+	var _auth2 = _interopRequireDefault(_auth);
+	
+	var _errors = __webpack_require__(343);
+	
+	var _errors2 = _interopRequireDefault(_errors);
+	
+	var _user = __webpack_require__(344);
+	
+	var _user2 = _interopRequireDefault(_user);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = (0, _redux.combineReducers)({
+	    routing: _reactRouterRedux.routerReducer,
+	    auth: _auth2.default,
+	    errors: _errors2.default,
+	    user: _user2.default
+	});
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 341 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/*** IMPORTS FROM imports-loader ***/
+	var jQuery = __webpack_require__(3);
+	var $ = __webpack_require__(3);
+	
+	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _createReducer;
 	
-	var _createReducer2 = __webpack_require__(337);
+	var _createReducer2 = __webpack_require__(342);
 	
 	var _createReducer3 = _interopRequireDefault(_createReducer2);
 	
@@ -56831,7 +57342,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ },
-/* 337 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/*** IMPORTS FROM imports-loader ***/
@@ -56862,7 +57373,186 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ },
-/* 338 */
+/* 343 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/*** IMPORTS FROM imports-loader ***/
+	var jQuery = __webpack_require__(3);
+	var $ = __webpack_require__(3);
+	
+	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createReducer;
+	
+	var _createReducer2 = __webpack_require__(342);
+	
+	var _createReducer3 = _interopRequireDefault(_createReducer2);
+	
+	var _constants = __webpack_require__(280);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var ADD_HTTP_ERROR_RESPOND_STATUS = _constants2.default.ADD_HTTP_ERROR_RESPOND_STATUS;
+	var ADD_RESPOND_ERROR_MESSAGE_AND_CODE = _constants2.default.ADD_RESPOND_ERROR_MESSAGE_AND_CODE;
+	
+	
+	var initialState = {
+	    status: null,
+	    code: null,
+	    message: null
+	};
+	
+	exports.default = (0, _createReducer3.default)(initialState, (_createReducer = {}, _defineProperty(_createReducer, ADD_HTTP_ERROR_RESPOND_STATUS, function (state, payload) {
+	    return Object.assign({}, state, {
+	        status: payload.status
+	    });
+	}), _defineProperty(_createReducer, ADD_RESPOND_ERROR_MESSAGE_AND_CODE, function (state, payload) {
+	    return Object.assign({}, state, {
+	        message: payload.message,
+	        code: payload.code
+	    });
+	}), _createReducer));
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "errors.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 344 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/*** IMPORTS FROM imports-loader ***/
+	var jQuery = __webpack_require__(3);
+	var $ = __webpack_require__(3);
+	
+	/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(4), RootInstanceProvider = __webpack_require__(12), ReactMount = __webpack_require__(14), React = __webpack_require__(83); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createReducer;
+	
+	var _createReducer2 = __webpack_require__(342);
+	
+	var _createReducer3 = _interopRequireDefault(_createReducer2);
+	
+	var _constants = __webpack_require__(280);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var FETCH_USER_INFO_REQUEST = _constants2.default.FETCH_USER_INFO_REQUEST;
+	var FETCH_USER_INFO_ERROR = _constants2.default.FETCH_USER_INFO_ERROR;
+	var FETCH_USER_INFO_SUCCESS = _constants2.default.FETCH_USER_INFO_SUCCESS;
+	var CHANGE_USER_PASSWORD_REQUEST = _constants2.default.CHANGE_USER_PASSWORD_REQUEST;
+	var CHANGE_USER_PASSWORD_FAILURE = _constants2.default.CHANGE_USER_PASSWORD_FAILURE;
+	var CHANGE_USER_PASSWORD_SUCCESS = _constants2.default.CHANGE_USER_PASSWORD_SUCCESS;
+	var CHANGE_USER_EMAIL_REQUEST = _constants2.default.CHANGE_USER_EMAIL_REQUEST;
+	var CHANGE_USER_EMAIL_FAILURE = _constants2.default.CHANGE_USER_EMAIL_FAILURE;
+	var CHANGE_USER_EMAIL_SUCCESS = _constants2.default.CHANGE_USER_EMAIL_SUCCESS;
+	var RESET_USER_STATE = _constants2.default.RESET_USER_STATE;
+	
+	
+	var initialState = {
+	    isProfileLoading: false,
+	    isProfileLoaded: false,
+	    loadingProfileError: false,
+	    changingPassword: false,
+	    errorChangingPassword: false,
+	    changingPasswordSuccess: false,
+	    changingEmail: false,
+	    errorChangingEmail: false,
+	    changingEmailSuccess: false,
+	    email: null,
+	    locale: null,
+	    gender: null,
+	    age: null
+	};
+	
+	exports.default = (0, _createReducer3.default)(initialState, (_createReducer = {}, _defineProperty(_createReducer, RESET_USER_STATE, function (state, payload) {
+	    return initialState;
+	}), _defineProperty(_createReducer, FETCH_USER_INFO_REQUEST, function (state, payload) {
+	    return Object.assign({}, state, {
+	        isProfileLoading: true,
+	        isProfileLoaded: false,
+	        loadingProfileError: false
+	    });
+	}), _defineProperty(_createReducer, FETCH_USER_INFO_ERROR, function (state, payload) {
+	    return Object.assign({}, state, {
+	        isProfileLoading: false,
+	        isProfileLoaded: false,
+	        loadingProfileError: true
+	    });
+	}), _defineProperty(_createReducer, FETCH_USER_INFO_SUCCESS, function (state, payload) {
+	    return Object.assign({}, state, {
+	        isProfileLoading: false,
+	        isProfileLoaded: true,
+	        loadingProfileError: false,
+	        email: payload.email,
+	        locale: payload.locale,
+	        gender: payload.gender,
+	        age: payload.age
+	    });
+	}), _defineProperty(_createReducer, CHANGE_USER_PASSWORD_REQUEST, function (state, payload) {
+	    return Object.assign({}, state, {
+	        changingPassword: true,
+	        errorChangingPassword: false,
+	        changingPasswordSuccess: false
+	    });
+	}), _defineProperty(_createReducer, CHANGE_USER_PASSWORD_FAILURE, function (state, payload) {
+	    return Object.assign({}, state, {
+	        changingPassword: false,
+	        errorChangingPassword: true,
+	        changingPasswordSuccess: false
+	    });
+	}), _defineProperty(_createReducer, CHANGE_USER_PASSWORD_SUCCESS, function (state, payload) {
+	    return Object.assign({}, state, {
+	        changingPassword: false,
+	        errorChangingPassword: false,
+	        changingPasswordSuccess: true
+	    });
+	}), _defineProperty(_createReducer, CHANGE_USER_EMAIL_REQUEST, function (state, payload) {
+	    return Object.assign({}, state, {
+	        changingEmail: true,
+	        errorChangingEmail: false,
+	        changingEmailSuccess: false
+	    });
+	}), _defineProperty(_createReducer, CHANGE_USER_EMAIL_FAILURE, function (state, payload) {
+	    return Object.assign({}, state, {
+	        changingEmail: false,
+	        errorChangingEmail: true,
+	        changingEmailSuccess: false
+	    });
+	}), _defineProperty(_createReducer, CHANGE_USER_EMAIL_SUCCESS, function (state, payload) {
+	    return Object.assign({}, state, {
+	        changingEmail: false,
+	        errorChangingEmail: false,
+	        changingEmailSuccess: true
+	    });
+	}), _createReducer));
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(282); if (makeExportsHot(module, __webpack_require__(83))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "user.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -56895,7 +57585,7 @@
 
 
 /***/ },
-/* 339 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -56910,11 +57600,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(340);
+	var _core = __webpack_require__(347);
 	
-	var _helpers = __webpack_require__(341);
+	var _helpers = __webpack_require__(348);
 	
-	var _defaults = __webpack_require__(344);
+	var _defaults = __webpack_require__(351);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -57018,7 +57708,7 @@
 
 
 /***/ },
-/* 340 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -57032,9 +57722,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(341);
+	var _helpers = __webpack_require__(348);
 	
-	var _diff = __webpack_require__(342);
+	var _diff = __webpack_require__(349);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -57156,7 +57846,7 @@
 
 
 /***/ },
-/* 341 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -57185,7 +57875,7 @@
 
 
 /***/ },
-/* 342 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -57199,7 +57889,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(343);
+	var _deepDiff = __webpack_require__(350);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -57286,7 +57976,7 @@
 
 
 /***/ },
-/* 343 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*** IMPORTS FROM imports-loader ***/
@@ -57720,7 +58410,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 344 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/

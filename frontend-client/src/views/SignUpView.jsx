@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as authActions from "../actions/authActions"
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from "redux"
 import ErrorView from "./ErrorView"
 import SignUpForm from "../components/SignUpForm"
 

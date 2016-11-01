@@ -6,8 +6,7 @@ import * as errorActions from "./errorsActions"
 const {addErrorRespondStatus, errorInHttpRequest} = errorActions;
 
 const { APIURL, LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER,
-    SIGNUP_USER_REQUEST, SIGNUP_USER_FAILURE, SIGNUP_USER_SUCCESS, UPDATE_USER_INFO_PASSWORD_REQUEST,
-    UPDATE_USER_INFO_PASSWORD_FAILURE, UPDATE_USER_INFO_PASSWORD_SUCCESS } = constants;
+    SIGNUP_USER_REQUEST, SIGNUP_USER_FAILURE, SIGNUP_USER_SUCCESS } = constants;
 
 export function loginUserSuccess( token, nickName ) {
     localStorage.setItem( "auth", JSON.stringify({ "token": token, "nickName": nickName }) );
