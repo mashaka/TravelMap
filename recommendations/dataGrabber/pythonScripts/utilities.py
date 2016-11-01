@@ -4,6 +4,15 @@ import os.path
 TXT_SUFFIX = '.txt'
 
 
+def read_all_files_in_list(dir):
+    files = [os.path.join(dir, f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
+    result = []
+    for filename in files:
+        with open(filename) as f:
+            result.append(f.read().splitlines())
+    return result
+
+
 def read_json(name):
     with open(name) as f:
         data_json = json.load(f)

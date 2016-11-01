@@ -6,15 +6,6 @@ DATA_DIR = 'dataInstagramCountries'
 RESULT_DIR = 'dataCountriesRefactored'
 
 
-def read_all_files_in_list():
-    files = [os.path.join(DATA_DIR, f) for f in os.listdir(DATA_DIR) if os.path.isfile(os.path.join(DATA_DIR, f))]
-    result = []
-    for filename in files:
-        with open(filename) as f:
-            result.append(f.read().splitlines())
-    return result
-
-
 def save_data(data_to_save):
     for i in range(len(data_to_save)):
         utilities.save_in_file(data_to_save[i], str(i), RESULT_DIR)
@@ -48,7 +39,7 @@ def process_data(data_to_process):
         resulted_data.append(refactored_data)
     return resulted_data
 
-data = read_all_files_in_list()
+data = utilities.read_all_files_in_list(DATA_DIR)
 
 processed_data = process_data(data)
 save_data(processed_data)
