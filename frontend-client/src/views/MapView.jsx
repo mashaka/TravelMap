@@ -1,16 +1,21 @@
 import React from "react"
+import { MapChoropleth } from "react-d3-map-choropleth"
+import * as TopoJson from "topojson"
 import "../styles/Fonts.scss"
 import "materialize-css/bin/materialize.css"
-import "jvectormap/jquery-jvectormap.css"
 import "../styles/MapView.scss"
 import "materialize-css/bin/materialize.js"
-import "jvectormap/jquery-jvectormap.min.js"
-import "../constants/jquery-jvectormap-world-mill.js"
-
+import World from "../constants/world-50m.json"
 
 /* TODO(dubov94): set up for small screens. */
 export default class MapView extends React.Component {
     render() {
+        let mesh = TopoJson.mesh(
+            World, World.objects.countries, function(a, b) {
+                return a !== b
+            }
+        )
+
         return (
             <div>
                 <ul id="side-bar" className="side-nav fixed"></ul>
@@ -45,6 +50,10 @@ export default class MapView extends React.Component {
                         </ul>
                     </div>
                 </nav>
+                {/* <MapChoropleth
+                    dataMesh={ mesh }
+                    projection={ 'mercator' }
+                    showGraticule={ false } /> */}
             </div>
         )
     }
