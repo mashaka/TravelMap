@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <p id="name">Test Name</p>
+    <p id="surname">Test Surname</p>
+    <p id="age">Test Age</p>
+    <p id="location">Test Location</p>
+    <p id="err">123</p>
+    <input type="text" id="Number" size="5" />
+    <input type="text" id="Login" size="5" />
+    <input type="text" id="Pass" size="5" />
+    <input type="button" value="Register" onclick="register();" />
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetPerson(1);
+    });
+    function GetPerson(id) {
+        $.ajax({
+            url: '/api/register/' + id,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                ShowPerson(data);
+            },
+            error: function () {
+                $("#err").text("err");
+            }
+        });
+    }
+    // вывод полученных данных на экран
+    function ShowPerson(person) {
+        $("#err").text("suc123");
+        $("#name").text(person.Name);
+        $("#surname").text(person.Surname);
+        $("#age").text(person.Age);
+        $("#location").text(person.Location);
+    }
+    function register()
+    {
+        $("#err").text("...");
+        var user = {
+            tempId:$("#Number").val(),
+            Name:$("#Login").val(),
+            Surname:$("#Pass").val()
+        }
+        $.ajax({
+            url: '/api/register/',
+            type: 'POST',
+            data: JSON.stringify(user),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                GetPerson(data.tempId);
+                $("#err").text("suc666");
+            },
+            error: function () {
+                $("#err").text("err666");
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
+
+
+
