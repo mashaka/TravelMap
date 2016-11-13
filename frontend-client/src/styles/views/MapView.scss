@@ -1,0 +1,23 @@
+$side-bar-size: 300px;
+
+// {
+//     position: fixed;
+//     top: $nav-bar-size;
+//     right: 0;
+//     bottom: 0;
+//     left: $side-bar-size;
+// }
+
+.side-bar {
+    $filter-margin: 20px;
+
+    &__sex {
+        display: flex;
+        justify-content: space-between;
+        margin: $filter-margin;
+    }
+
+    &__age {
+        margin: $filter-margin $filter-margin 30px;
+    }
+}

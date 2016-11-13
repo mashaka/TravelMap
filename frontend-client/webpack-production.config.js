@@ -22,6 +22,10 @@ module.exports = {
                 loaders: ['style','css','sass']
             },
             {
+                test: /\.json$/,
+                loader: 'json-loader'
+            },
+            {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
                 loader: 'file?hash=sha512&digest=hex&name=fonts/[hash].[ext]'
             },

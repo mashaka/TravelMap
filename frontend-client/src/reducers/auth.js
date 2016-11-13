@@ -9,7 +9,7 @@ const { LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER,
 const initialState = {
     // Main auth information
     token: null,
-    nickName: null,
+    nickName: "Shkiper",
     // Auth status flags for signin/signup components
     isAuthenticating: false,
     isAuthenticated: false,

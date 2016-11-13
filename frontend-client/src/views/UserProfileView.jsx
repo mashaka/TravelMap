@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux"
 import UserInfo from "../components/UserInfo"
 import ChangePasswordForm from "../components/ChangePasswordForm"
 import ChangeEmailForm from "../components/ChangeEmailForm"
+import "../styles/views/UserProfileView.scss"
 
 @connect(
     (state) => ({
@@ -36,7 +37,7 @@ export default class UserProfileView extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className="user-profile-view">
                 <UserInfo userName={this.props.name}
                           {...this.props.user} />
                 <ChangeEmailForm changeEmailCallback={this.changeEmail.bind(this)}
