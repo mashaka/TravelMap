@@ -4,6 +4,9 @@ import * as authActions from "../actions/authActions"
 import { bindActionCreators } from "redux"
 import ErrorView from "./ErrorView"
 import LoginForm from "../components/LoginForm"
+import { Link } from "react-router"
+
+import "../styles/views/LoginView.scss"
 
 @connect(
     (state) => ({
@@ -34,11 +37,14 @@ export default class LoginView extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className="login-card">
                 <LoginForm login={this.login}
                            password={this.password}
                            loginCallback={this.enter.bind(this)}
                            isDisabled={this.props.isAuthenticating} />
+                <p>
+                    Want to create new account? <Link className="blue-text text-lighten-3" to="/signup">Sign Up</Link>
+                </p>
                 {this.props.error ?
                     <ErrorView /> : ''}
             </div>

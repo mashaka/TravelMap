@@ -23,7 +23,11 @@ export default Object.assign({},
         "CHANGE_USER_EMAIL_REQUEST",
         "CHANGE_USER_EMAIL_FAILURE",
         "CHANGE_USER_EMAIL_SUCCESS",
-        "RESET_USER_STATE"
+        "RESET_USER_STATE",
+
+        //Signup form actions
+        "SIGNUP_CHOOSE_GENDER",
+        "SIGNUP_CHOOSE_BIRTHDATE"
     ),
     {
         // Root api url

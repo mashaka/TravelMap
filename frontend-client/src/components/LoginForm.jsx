@@ -1,20 +1,22 @@
 import React from "react"
+import "../styles/components/LoginForm.scss"
 
 const LoginForm = ({isDisabled, loginCallback, login, password}) => (
-    <div>
-        <h1> Login form </h1>
+    <div className="login-form">
         <form type="submit">
-            <div>
-                <input type="text" placeholder="Login" ref={(input)=>login=input} />
+            <div className="input-field">
+                <input id="email" type="text" className="validate" ref={(input)=>login=input} />
+                <label for="email"> Login </label>
+            </div>
+            <div className="input-field">
+                <input id="email" type="password" className="validate" ref={(input)=>password=input} />
+                <label for="email"> Password </label>
             </div>
             <div>
-                <input type="password" placeholder="Password" ref={(input)=>password=input} />
-            </div>
-            <div>
-                <button type="submit"
+                <button type="submit" className="waves-effect waves-light btn"
                         disabled={isDisabled}
                         onClick={loginCallback}>
-                    Enter
+                    Login
                 </button>
             </div>
         </form>
