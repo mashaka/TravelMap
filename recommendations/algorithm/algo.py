@@ -26,11 +26,11 @@ def answer(user):
     for i_a, a in enumerate(data[:-1]):
         dist = distance(a, user)
         for i in range(1, len(a)):
-            if a[i] != user[i]:
+            if a[i] != user[i] and user[i] == 0:
                 p[i-1] += dist
     if sum(p) != 0:
         p = [float(i) / sum(p) for i in p]
     return p
 
 
-print(answer(np.random.randint(2, size=253))[:5])
+print(answer(np.random.randint(2, size=253)))
