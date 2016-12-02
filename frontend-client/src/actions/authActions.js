@@ -87,16 +87,19 @@ export function signUpUserFailure() {
     }
 }
 
-export function signUpUser( nickName, eMail, password ) {
+export function signUpUser( nickName, eMail, password, locale, gender, birthday, birthmonth, birthyear ) {
     return function( dispatch ) {
         dispatch( signUpUserRequest() );
+        console.log(JSON.stringify({Login: nickName, Email: eMail, Password: password, Locale: locale, Gender: gender,
+            BirthDay: birthday, BirthMonth: birthmonth, BirthYear: birthyear }));
         return fetch(APIURL + "/users", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({username: nickName, email: eMail, password: password})
+            body: JSON.stringify({Login: nickName, Email: eMail, Password: password, Locale: locale, Gender: gender,
+                BirthDay: birthday, BirthMonth: birthmonth, BirthYear: birthyear })
         })
         .then(response => {
             if( response.status === 201 ) {

@@ -1,6 +1,7 @@
 import React from "react"
 import "../styles/components/SignUpForm.scss"
 import DatePicker from "react-datepicker"
+import Countries from "../constants/flags/countries.json"
 
 require('react-datepicker/dist/react-datepicker.css');
 
@@ -45,11 +46,25 @@ export default class SignUpForm extends React.Component {
                         placeholderText="Select your birth date"
                         isClearable={true}
                     />
+
                     <div>
-                        <button type="submit" className="waves-effect waves-light btn"
+                        <select className="browser-default" defaultValue="" ref={(input) => this.locale = input}>
+                            <option value="" disabled>Choose your country</option>
+                            {Object.keys(Countries).map( (key) => (
+                                <option value={key}>{Countries[key]}</option>
+                            ) ) }
+                        </select>
+                    </div>
+
+                    <div>
+                        <button type="submit" className="waves-effect waves-light btn signup-form__button"
                                 disabled={this.props.pending}
-                                onClick={() => this.props.registrationCallBack(this.nickname.value, this.email.value, this.password.value,
-                                    this.props.gender, this.props.birthDate._i)}>
+                                onClick={(e) => {
+                                        e.preventDefault();
+                                        this.props.registrationCallBack( this.nickname.value, this.email.value, this.password.value, this.locale.value,
+                                            this.props.gender, this.props.birthDate.date(), this.props.birthDate.month(), this.props.birthDate.year() );
+                                    }
+                                }>
                             Sign Up
                         </button>
                     </div>

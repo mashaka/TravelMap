@@ -11,7 +11,7 @@ import EnterView from "../views/EnterView"
 
 export default(
     <Route path="/" component={App}>
-        <IndexRedirect to="login" />
+        <IndexRedirect to="home" />
         <Route component={SiteView}>
             <Route path="map" component={MapView} />
             <Route path="home" component={UserProfileView} />

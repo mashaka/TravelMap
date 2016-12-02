@@ -23,9 +23,8 @@ import "../styles/views/SignUpView.scss"
 )
 export default class SignUpView extends React.Component {
 
-    register( nickname, email, password, gender, birthdate ) {
-        e.preventDefault();
-        this.props.actions.signUpUser( nickname, email, password, gender, birthdate );
+    register( nickname, email, password, locale, gender, birthday, birthmoth, birthyear ) {
+        this.props.actions.signUpUser( nickname, email, password, locale, gender, birthday, birthmoth, birthyear );
     }
 
     render() {
