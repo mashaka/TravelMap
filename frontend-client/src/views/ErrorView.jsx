@@ -22,11 +22,8 @@ export default class ErrorView extends React.Component {
             return null;
         }
         return(
-            <div>
-                <p>Error!</p>
-                <p>Respond status: {this.props.respondStatus}</p>
-                <p>Respond code: {this.props.respondCode}</p>
-                <p>Message: {this.props.respondMessage}</p>
+            <div className="error-message-block">
+                {this.props.message}
             </div>
         );
     }

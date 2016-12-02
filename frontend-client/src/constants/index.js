@@ -2,6 +2,10 @@ import createConstants from "../utils/createConstants"
 
 export default Object.assign({},
     createConstants(
+        //Global errors
+        "ADD_HTTP_ERROR_RESPOND_STATUS",
+        "ADD_RESPOND_ERROR_MESSAGE_AND_CODE",
+
         // Login actions
         "LOGIN_USER_REQUEST",
         "LOGIN_USER_FAILURE",
@@ -31,5 +35,5 @@ export default Object.assign({},
     ),
     {
         // Root api url
-        APIURL: null // waiting for backend
+        APIURL: "http://travel-map.azurewebsites.net/api"
     });

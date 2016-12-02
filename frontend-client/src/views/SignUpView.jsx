@@ -12,7 +12,7 @@ import "../styles/views/SignUpView.scss"
 @connect(
     (state) => ({
         pending : state.auth.isAuthenticating,
-        error: state.auth.errorWhileAuthenticating,
+        error: state.auth.errorSigningUp,
         gender: state.signup.gender,
         birthDate: state.signup.birthdate
     }),

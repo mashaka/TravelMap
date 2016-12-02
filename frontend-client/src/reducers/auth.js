@@ -9,7 +9,7 @@ const { LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER,
 const initialState = {
     // Main auth information
     token: null,
-    nickName: "Shkiper",
+    nickName: null,
     // Auth status flags for signin/signup components
     isAuthenticating: false,
     isAuthenticated: false,
@@ -17,7 +17,9 @@ const initialState = {
     updatingPassword: false,
     updatedPassword: false,
     // Error flag to detect showing error
-    errorWhileAuthenticating: false
+    errorWhileAuthenticating: false,
+    // Error detecting signing up problems
+    errorSigningUp: false
 };
 
 export default createReducer(initialState,
@@ -51,29 +53,31 @@ export default createReducer(initialState,
                 inAuthenticating: false,
                 isAuthenticated: false,
                 token: null,
+                nickName: null,
                 statusText: null,
-                errorWhileAuthenticating: false
+                errorWhileAuthenticating: false,
+                errorSigningUp: false
             });
         },
         [SIGNUP_USER_REQUEST]: (state, payload) => {
             return Object.assign({}, state, {
                 isAuthenticating: true,
                 isAuthenticated: false,
-                errorWhileAuthenticating: false
+                errorSigningUp: false
             });
         },
         [SIGNUP_USER_SUCCESS]: (state, payload) => {
             return Object.assign({}, state, {
                 isAuthenticating: false,
                 isAuthenticated: false,
-                errorWhileAuthenticating: false
+                errorSigningUp: false
             });
         },
         [SIGNUP_USER_FAILURE]: (state, payload) => {
             return Object.assign({}, state, {
                 isAuthenticating: false,
                 isAuthenticated: false,
-                errorWhileAuthenticating: true
+                errorSigningUp: true
             });
         }
     }

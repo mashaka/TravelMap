@@ -1,16 +1,21 @@
 import React from "react"
+import { Link } from "react-router"
+import NavItem from "./NavItem"
 
 import "../styles/components/Siteheader.scss"
 
-const SiteHeader = () => (
+const SiteHeader = ({nickname, logoutCallback}) => (
     <div>
         <ul id="profile-dropdown__menu" className="dropdown-content">
             <li>
-                <a href="#">Profile</a>
+                <Link to="/home">Profile</Link>
             </li>
             <li className="divider"></li>
             <li>
-                <a href="#">Log out</a>
+                <a href="#" onClick={(e) => {
+                    e.preventDefault();
+                    logoutCallback();
+                }}>Log out</a>
             </li>
         </ul>
         <nav className="blue darken-1">
@@ -20,16 +25,16 @@ const SiteHeader = () => (
                     <i className="material-icons">menu</i>
                 </a>
                 <ul className="right">
-                    <li>
-                        <a href="#">My Map</a>
-                    </li>
-                    <li className="active">
-                        <a href="#">Shared Map</a>
-                    </li>
+                    <NavItem to="map" >
+                        My Map
+                    </NavItem>
+                    <NavItem to="shared">
+                        Shared Map
+                    </NavItem>
                     <li>
                         <a className="dropdown-button" href="#" data-activates="profile-dropdown__menu">
                             <img className="circle profile-dropdown__image" src="https://placehold.it/100" />
-                            <span>Your Mom<i className="material-icons right">arrow_drop_down</i></span>
+                            <span>{nickname}<i className="material-icons right">arrow_drop_down</i></span>
                         </a>
                     </li>
                 </ul>

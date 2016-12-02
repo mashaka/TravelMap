@@ -90,9 +90,7 @@ export function signUpUserFailure() {
 export function signUpUser( nickName, eMail, password, locale, gender, birthday, birthmonth, birthyear ) {
     return function( dispatch ) {
         dispatch( signUpUserRequest() );
-        console.log(JSON.stringify({Login: nickName, Email: eMail, Password: password, Locale: locale, Gender: gender,
-            BirthDay: birthday, BirthMonth: birthmonth, BirthYear: birthyear }));
-        return fetch(APIURL + "/users", {
+        return fetch(APIURL + "/register", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -102,18 +100,20 @@ export function signUpUser( nickName, eMail, password, locale, gender, birthday,
                 BirthDay: birthday, BirthMonth: birthmonth, BirthYear: birthyear })
         })
         .then(response => {
-            if( response.status === 201 ) {
+            if( response.status === 200 ) {
                 dispatch( signUpUserSuccess() );
-                return null;
             } else {
                 dispatch(addErrorRespondStatus(response.status));
-                return response.json();
             }
+            return response.json();
         })
         .then(response => {
-            if( response && response["accessToken"] ) {
+            if( response["Id"] ) {
+                dispatch( loginUserSuccess( response["Id"], nickName ) );
+                dispatch( push("/map") );
+            } else {
                 dispatch( signUpUserFailure() );
-                dispatch( errorInHttpRequest(response) );
+                dispatch( errorInHttpRequest( response ) );
             }
         });
     }

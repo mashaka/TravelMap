@@ -16,8 +16,7 @@ export function errorInHttpRequest( error ) {
     return {
         type: ADD_RESPOND_ERROR_MESSAGE_AND_CODE,
         payload: {
-            code: error.code,
-            message: error.message
+            message: error["Message"]
         }
     }
 }

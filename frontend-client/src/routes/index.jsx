@@ -8,12 +8,14 @@ import MapView from "../views/MapView"
 import SiteView from "../views/SiteView"
 import UserProfileView from "../views/UserProfileView"
 import EnterView from "../views/EnterView"
+import { requireAuthentication } from "../utils/requireAuthentication"
 
 export default(
     <Route path="/" component={App}>
         <IndexRedirect to="home" />
-        <Route component={SiteView}>
+        <Route component={requireAuthentication(SiteView)}>
             <Route path="map" component={MapView} />
+            <Route path="shared" component={MapView} />
             <Route path="home" component={UserProfileView} />
         </Route>
         <Route component={EnterView} >

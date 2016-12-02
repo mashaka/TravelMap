@@ -5,7 +5,6 @@ const { ADD_HTTP_ERROR_RESPOND_STATUS, ADD_RESPOND_ERROR_MESSAGE_AND_CODE } = co
 
 const initialState = {
     status: null,
-    code: null,
     message: null
 };
 
@@ -17,8 +16,7 @@ export default createReducer(initialState, {
     },
     [ADD_RESPOND_ERROR_MESSAGE_AND_CODE]: (state, payload) => {
         return Object.assign({}, state, {
-            message: payload.message,
-            code: payload.code
+            message: payload.message
         })
     }
 })
