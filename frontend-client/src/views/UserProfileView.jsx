@@ -20,6 +20,7 @@ import "../styles/views/UserProfileView.scss"
 export default class UserProfileView extends React.Component {
 
     loadUserInfo() {
+        this.props.actions.resetState();
         this.props.actions.loadUserInfo( this.props.token );
     }
 

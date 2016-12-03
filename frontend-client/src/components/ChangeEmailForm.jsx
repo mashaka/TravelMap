@@ -10,7 +10,6 @@ const ChangeEmailForm = ({changeEmailCallback, changingEmail, errorChangingEmail
             <form type="submit" onSubmit={(e) => {
                 e.preventDefault();
                 changeEmailCallback(newEmail.value);
-                newEmail.value = "";
             }}>
                 <div className="input-field">
                     <input id="email" type="email" className="validate" ref={(input)=>newEmail=input} />
@@ -24,7 +23,7 @@ const ChangeEmailForm = ({changeEmailCallback, changingEmail, errorChangingEmail
             { errorChangingEmail ?
                 <ErrorView /> : '' }
             { changingEmailSuccess ?
-             <p> Confirmation letter was sent to new email address. </p> : '' }
+             <p className="success-response"> Successfully changed email. </p> : '' }
         </div>
     );
 };

@@ -16,12 +16,12 @@ const ChangePasswordForm = ({changePasswordCallback, changingPassword,
                 newPassword.value = "";
             }}>
                 <div className="input-field">
-                    <input id="email" type="email" className="validate" ref={(input)=>oldPassword=input} />
+                    <input id="email" type="password" ref={(input)=>oldPassword=input} />
                     <label for="email" data-error="wrong" data-success="right"> Old password </label>
                 </div>
 
                 <div className="input-field">
-                    <input id="email" type="email" className="validate" ref={(input)=>newPassword=input} />
+                    <input id="email" type="password" ref={(input)=>newPassword=input} />
                     <label for="email" data-error="wrong" data-success="right"> New password </label>
                 </div>
 
@@ -33,7 +33,7 @@ const ChangePasswordForm = ({changePasswordCallback, changingPassword,
             { errorChangingPassword ?
                 <ErrorView /> : '' }
             { changingPasswordSuccess ?
-                <p> Your password was successfully changed. </p> : '' }
+                <p className="success-response"> Your password was successfully changed. </p> : '' }
         </div>
     );
 };

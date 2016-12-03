@@ -4,7 +4,6 @@ import Flags from "../constants/flags/flags.json"
 
 const UserInfo = ({userName, email, gender, age, locale}) => (
     <div className="user-info-card">
-        {console.log(Flags[locale])}
         <ul className="collection">
             <li className="collection-item">Your username: {userName}</li>
             <li className="collection-item">Your email: {email}</li>

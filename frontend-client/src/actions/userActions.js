@@ -31,7 +31,6 @@ export function loadUserInfo(token) {
                     dispatch( { type: FETCH_USER_INFO_ERROR } );
                     dispatch(errorInHttpRequest({Message: "Error"}));
                 } else {
-                    console.log( response );
                     dispatch( {type: FETCH_USER_INFO_SUCCESS, payload: response })
                 }
             });
@@ -41,17 +40,17 @@ export function loadUserInfo(token) {
 export function changePassword( token, oldPassword, newPassword ) {
     return function( dispatch ) {
         dispatch( { type: CHANGE_USER_PASSWORD_REQUEST } );
-        return fetch(APIURL + "/password", {
+        return fetch(APIURL + "/information", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json",
-                "authorization": "Bearer " + token
+                "Authorization": token
             },
-            body: JSON.stringify({old: oldPassword, new: newPassword})
+            body: JSON.stringify({OldPassword: oldPassword, NewPassword: newPassword})
         })
             .then(response => {
-                if( response.status === 201 ) {
+                if( response.status === 200 ) {
                     dispatch( { type: CHANGE_USER_PASSWORD_SUCCESS } );
                     return null;
                 } else {
@@ -60,7 +59,7 @@ export function changePassword( token, oldPassword, newPassword ) {
                 }
             })
             .then(response => {
-                if( response && response["accessToken"] ) {
+                if( response ) {
                     dispatch( { type: CHANGE_USER_PASSWORD_FAILURE } );
                     dispatch( errorInHttpRequest(response) );
                 }
@@ -71,18 +70,19 @@ export function changePassword( token, oldPassword, newPassword ) {
 export function changeEmail( token, newEmail ) {
     return function( dispatch ) {
         dispatch( { type: CHANGE_USER_EMAIL_REQUEST } );
-        return fetch(APIURL + "/password", {
+        return fetch(APIURL + "/information", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json",
-                "authorization": "Bearer " + token
+                "Authorization": token
             },
-            body: JSON.stringify({email: newEmail})
+            body: JSON.stringify({Email: newEmail})
         })
             .then(response => {
-                if( response.status === 201 ) {
+                if( response.status === 200 ) {
                     dispatch( { type: CHANGE_USER_EMAIL_SUCCESS } );
+                    dispatch( loadUserInfo(token) );
                     return null;
                 } else {
                     dispatch(addErrorRespondStatus(response.status));
@@ -90,7 +90,7 @@ export function changeEmail( token, newEmail ) {
                 }
             })
             .then(response => {
-                if( response && response["accessToken"] ) {
+                if( response ) {
                     dispatch( { type: CHANGE_USER_EMAIL_FAILURE } );
                     dispatch( errorInHttpRequest(response) );
                 }
