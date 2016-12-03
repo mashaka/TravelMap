@@ -44,10 +44,10 @@ export default createReducer( initialState, {
             isProfileLoading: false,
             isProfileLoaded: true,
             loadingProfileError: false,
-            email: payload.email,
-            locale: payload.locale,
-            gender: payload.gender,
-            age: payload.age
+            email: payload.Email,
+            locale: payload.Locale,
+            gender: payload.Gender,
+            age: payload.Age
         })
     },
     [CHANGE_USER_PASSWORD_REQUEST]: (state, payload) => {

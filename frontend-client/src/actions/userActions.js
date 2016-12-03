@@ -15,10 +15,8 @@ export function loadUserInfo(token) {
             method: "GET",
             headers: {
                 "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: {
-                "Id": token
+                "Content-type": "application/json",
+                "Authorization": token
             }
         })
             .then(response => {
