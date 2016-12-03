@@ -15,10 +15,10 @@ const initialState = {
     changingEmail: false,
     errorChangingEmail: false,
     changingEmailSuccess: false,
-    email: "aa_Zhur@mail.ru",
-    locale: "Russia",
-    gender: "Male",
-    age: 21
+    email: null,
+    locale: null,
+    gender: null,
+    age: null
 };
 
 export default createReducer( initialState, {

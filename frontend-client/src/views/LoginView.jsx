@@ -27,12 +27,9 @@ export default class LoginView extends React.Component {
         };
     }
 
-    enter(e) {
-        e.preventDefault();
-        this.props.actions.loginUser(this.login.value,
-            this.password.value, this.state.redirectTo);
-        this.login.value ='';
-        this.password.value = '';
+    enter( login, password ) {
+        this.props.actions.loginUser( login,
+            password, this.state.redirectTo );
     }
 
     render() {
@@ -42,11 +39,11 @@ export default class LoginView extends React.Component {
                            password={this.password}
                            loginCallback={this.enter.bind(this)}
                            isDisabled={this.props.isAuthenticating} />
+                {this.props.error ?
+                    <ErrorView /> : ''}
                 <p>
                     Want to create new account? <Link className="blue-text text-lighten-3" to="/signup">Sign Up</Link>
                 </p>
-                {this.props.error ?
-                    <ErrorView /> : ''}
             </div>
         );
     }

@@ -35,15 +35,22 @@ export default class UserProfileView extends React.Component {
         this.props.actions.changeEmail( this.props.token, newEmail );
     }
 
+    componentDidMount() {
+        this.loadUserInfo();
+    }
+
     render() {
         return(
             <div className="user-profile-view">
-                <UserInfo userName={this.props.name}
-                          {...this.props.user} />
-                <ChangeEmailForm changeEmailCallback={this.changeEmail.bind(this)}
-                          {...this.props.user}/>
-                <ChangePasswordForm changePasswordCallback={this.changePassword.bind(this)}
-                          {...this.props.user}/>
+                { this.props.user.isProfileLoaded ?
+                    <div>
+                        <UserInfo userName={this.props.name}
+                                  {...this.props.user} />
+                        <ChangeEmailForm changeEmailCallback={this.changeEmail.bind(this)}
+                                  {...this.props.user}/>
+                        <ChangePasswordForm changePasswordCallback={this.changePassword.bind(this)}
+                                  {...this.props.user}/>
+                    </div> : '' }
             </div>
         );
     }

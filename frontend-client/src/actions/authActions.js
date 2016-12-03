@@ -43,7 +43,7 @@ export function logout() {
 export function loginUser( login, password ) {
     return function( dispatch ) {
         dispatch( loginUserRequest() );
-        fetch(APIURL + "/tokens/access", {
+        fetch(APIURL + "/authorization", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -51,21 +51,23 @@ export function loginUser( login, password ) {
             },
             body: JSON.stringify({login: login, password: password})
         })
-            .then(response => {
-                if( response.status !== 201 ) {
-                    dispatch(addErrorRespondStatus(response.status));
-                }
-                return response;
-            })
-            .then(response => response.json())
-            .then(response => {
-                if( response["accessToken"] ) {
-                    dispatch( push("/") );
-                } else {
-                    dispatch( loginUserFailure() );
-                    dispatch( errorInHttpRequest(response) );
-                }
-            });
+        .then(response => {
+            if( response.status === 200 ) {
+                dispatch( signUpUserSuccess() );
+            } else {
+                dispatch(addErrorRespondStatus(response.status));
+            }
+            return response.json();
+        })
+        .then(response => {
+            if( response["Id"] ) {
+                dispatch( loginUserSuccess( response["Id"], login ) );
+                dispatch( push("/home") );
+            } else {
+                dispatch( loginUserFailure() );
+                dispatch( errorInHttpRequest( response ) );
+            }
+        });
     }
 }
 
@@ -110,7 +112,7 @@ export function signUpUser( nickName, eMail, password, locale, gender, birthday,
         .then(response => {
             if( response["Id"] ) {
                 dispatch( loginUserSuccess( response["Id"], nickName ) );
-                dispatch( push("/map") );
+                dispatch( push("/home") );
             } else {
                 dispatch( signUpUserFailure() );
                 dispatch( errorInHttpRequest( response ) );

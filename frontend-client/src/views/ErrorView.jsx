@@ -10,10 +10,7 @@ const {logout} = authActions;
 export default class ErrorView extends React.Component {
 
     componentWillReceiveProps(newProps) {
-        // If user token is no longer valid, he is being logged out automatically
-        if( newProps.respondCode === 1 || newProps.respondCode === 2 ) {
-            this.props.dispatch( logout() );
-        }
+        // handling specific situations
     }
 
     render() {

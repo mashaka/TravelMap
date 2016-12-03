@@ -15,7 +15,10 @@ const LoginForm = ({isDisabled, loginCallback, login, password}) => (
             <div>
                 <button type="submit" className="waves-effect waves-light btn"
                         disabled={isDisabled}
-                        onClick={loginCallback}>
+                        onClick={(e) => {
+                            e.preventDefault();
+                            loginCallback( login.value, password.value );
+                        }}>
                     Login
                 </button>
             </div>

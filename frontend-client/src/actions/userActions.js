@@ -11,25 +11,29 @@ const { FETCH_USER_INFO_REQUEST, FETCH_USER_INFO_ERROR, FETCH_USER_INFO_SUCCESS,
 export function loadUserInfo(token) {
     return function( dispatch ) {
         dispatch( { type: FETCH_USER_INFO_REQUEST } );
-        return fetch(APIURL + "/users", {
+        return fetch(APIURL + "/information", {
             method: "GET",
             headers: {
                 "Accept": "application/json",
-                "Content-type": "application/json",
-                "authorization": "Bearer " + token
+                "Content-type": "application/json"
+            },
+            body: {
+                "Id": token
             }
         })
             .then(response => {
-                if (response.status !== 201) {
+                if (response.status !== 200) {
                     dispatch(addErrorRespondStatus(response.status));
+                    return null;
                 }
                 return response.json();
             })
             .then(response => {
-                if (response && response["message"]) {
+                if (!response) {
                     dispatch( { type: FETCH_USER_INFO_ERROR } );
-                    dispatch(errorInHttpRequest(response));
+                    dispatch(errorInHttpRequest({Message: "Error"}));
                 } else {
+                    console.log( response );
                     dispatch( {type: FETCH_USER_INFO_SUCCESS, payload: response })
                 }
             });
