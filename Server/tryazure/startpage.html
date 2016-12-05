@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <p>Приветики</p>
+    
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+    });
+    function GetPerson() {
+        $.ajax({
+            url: '/api/map/recommended',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                alert("Данные отправлены");
+            }
+        });
+    }
+
+    function register() {
+        var user = {"Countries":["russia","usa"]}
+
+        $.ajax({
+            url: '/api/map/',
+            type: 'POST',
+            data: JSON.stringify(user),
+            contentType: "application/json;charset=utf-8"
+        });
+    }
+    
+    // вывод полученных данных на экран
+    function register123()
+    {
+        var user = {
+            Login:"sanya",
+            Email:"sasanya"
+        }
+        $.ajax({
+            url: '/api/register/',
+            type: 'POST',
+            data: JSON.stringify(user),
+            contentType: "application/json;charset=utf-8"
+        });
+    }
+
+</script>
+</body>
+</html>
+
+
+
