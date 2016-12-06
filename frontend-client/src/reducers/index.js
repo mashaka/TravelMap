@@ -4,11 +4,13 @@ import auth from "./auth"
 import errors from "./errors"
 import user from "./user"
 import signup from "./signup"
+import map from "./map"
 
 export default combineReducers({
     routing: routerReducer,
     auth: auth,
     errors: errors,
     user: user,
-    signup: signup
+    signup: signup,
+    map: map
 });

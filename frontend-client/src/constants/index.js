@@ -31,7 +31,15 @@ export default Object.assign({},
 
         //Signup form actions
         "SIGNUP_CHOOSE_GENDER",
-        "SIGNUP_CHOOSE_BIRTHDATE"
+        "SIGNUP_CHOOSE_BIRTHDATE",
+
+        // Map actions.
+        "MAP_FETCH_VISITED_REQUEST",
+        "MAP_FETCH_VISITED_FAILURE",
+        "MAP_FETCH_VISITED_SUCCESS",
+        "MAP_POST_VISITED_REQUEST",
+        "MAP_POST_VISITED_FAILURE",
+        "MAP_POST_VISITED_SUCCESS"
     ),
     {
         // Root api url

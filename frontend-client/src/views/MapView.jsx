@@ -3,8 +3,20 @@ import update from "immutability-helper"
 import "../styles/Fonts.scss"
 import "../styles/views/MapView.scss"
 import Flags from "../constants/flags/flags.json"
+import { connect } from "react-redux"
+import * as mapActions from "../actions/mapActions"
+import { bindActionCreators } from "redux"
 
 /* TODO(dubov94): set up for small screens. */
+@connect(
+    (state) => ({
+        token: state.auth.token,
+        visited: state.map.visited
+    }),
+    (dispatch) => ({
+        actions: bindActionCreators(mapActions, dispatch)
+    })
+)
 export default class MapView extends React.Component {
     constructor(...args) {
         super(...args)
@@ -90,8 +102,7 @@ export default class MapView extends React.Component {
     }
 
     initializeMap() {
-        this.visited = ['RU', 'US']
-        this.recommendations = { UK: 0, CA: 25, FR: 75 }
+        this.recommendations = { FR: 75 }
 
 
         $("#world-map").vectorMap({
@@ -115,7 +126,7 @@ export default class MapView extends React.Component {
                 }
             },
             onRegionClick: (e, code) => {
-                if(this.visited.indexOf(code) !== -1) {
+                if(this.props.visited.indexOf(code) !== -1) {
                     return false
                 }
             }
@@ -123,6 +134,7 @@ export default class MapView extends React.Component {
     }
 
     componentDidMount() {
+        this.props.actions.fetchVisited(this.props.token)
         $(document).ready(() => {
             this.initializeSlider()
             this.initializeAutoComplete()
