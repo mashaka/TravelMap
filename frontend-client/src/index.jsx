@@ -4,8 +4,6 @@ import Root from './containers/Root';
 import { browserHistory } from 'react-router';
 import configureStore from './store/configureStore'
 import { loginUserSuccess } from "./actions/authActions"
-import "materialize-css/bin/materialize.css"
-import "materialize-css/dist/js/materialize.min.js"
 
 const target = document.createElement('div');
 document.body.appendChild(target);

@@ -53,7 +53,7 @@ module.exports = {
             }
         }),
         new HtmlwebpackPlugin({
-            title: 'Travel Map'
+            template: './src/index.html'
         })
     ]
 };

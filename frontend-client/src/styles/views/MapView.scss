@@ -10,6 +10,7 @@ $side-bar-size: 300px;
 
 .side-bar {
     $filter-margin: 20px;
+    overflow: hidden;
 
     &__sex {
         display: flex;
@@ -19,5 +20,9 @@ $side-bar-size: 300px;
 
     &__age {
         margin: $filter-margin $filter-margin 30px;
+    }
+
+    &__locale {
+        margin-top: 1.5 * $filter-margin;
     }
 }

@@ -2,10 +2,7 @@ import React from "react"
 import { MapChoropleth } from "react-d3-map-choropleth"
 import * as TopoJson from "topojson"
 import "../styles/Fonts.scss"
-import "materialize-css/bin/materialize.css"
-import "materialize-css/extras/noUiSlider/nouislider.css"
 import "../styles/views/MapView.scss"
-import NoUiSlider from "materialize-css/extras/noUiSlider/nouislider.js"
 import World from "../constants/world-50m.json"
 import Flags from "../constants/flags/flags.json"
 
@@ -33,7 +30,7 @@ export default class MapView extends React.Component {
         /* TODO(dubov94): Split into components. */
         return (
             <div>
-                <ul id="side-bar" className="side-nav fixed">
+                <ul id="side-bar" className="side-bar side-nav fixed">
                     <h5 className="center">Filters</h5>
                     <h6>Sex</h6>
                     <div className="side-bar__sex">
@@ -43,7 +40,7 @@ export default class MapView extends React.Component {
                     <h6>Age</h6>
                     <div className="side-bar__age"></div>
                     <h6>Locale</h6>
-                    <div className="side-bar__locale">
+                    <div className="side-bar__locale input-field col s12">
                         <input type="text" id="side-bar__locale"
                             className="autocomplete" />
                         <label htmlFor="side-bar__locale">Country</label>
@@ -59,7 +56,7 @@ export default class MapView extends React.Component {
 
     initializeSlider() {
         const slider = document.querySelector(".side-bar__age")
-        NoUiSlider.create(slider, {
+        noUiSlider.create(slider, {
             start: [18, 90],
             connect: true,
             step: 1,
@@ -74,8 +71,10 @@ export default class MapView extends React.Component {
     }
 
     initializeAutoComplete() {
-        $("input.autocomplete").autocomplete({
-            data: Flags
+        $(document).ready(function() {
+            $("input.autocomplete").autocomplete({
+                data: Flags
+            })
         })
     }
 
