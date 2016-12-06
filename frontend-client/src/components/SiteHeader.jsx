@@ -31,9 +31,9 @@ export default class SiteHeader extends React.Component {
                             <NavItem to="map" >
                                 My Map
                             </NavItem>
-                            <NavItem to="shared">
+                            <li>
                                 Shared Map
-                            </NavItem>
+                            </li>
                             <li>
                                 <a className="dropdown-button" href="#" data-activates="profile-dropdown__menu" ref="dropdown">
                                     <img className="circle profile-dropdown__image" src="https://placehold.it/100" />

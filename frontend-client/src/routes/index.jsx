@@ -15,7 +15,7 @@ export default(
         <IndexRedirect to="home" />
         <Route component={requireAuthentication(SiteView)}>
             <Route path="map" component={MapView} />
-            <Route path="shared" component={MapView} />
+            {/* <Route path="shared" component={MapView} /> */}
             <Route path="home" component={UserProfileView} />
         </Route>
         <Route component={EnterView} >

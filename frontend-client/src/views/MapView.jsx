@@ -66,7 +66,18 @@ export default class MapView extends React.Component {
     }
 
     initializeMap() {
-        $("#world-map").vectorMap({map: "world_mill"});
+        $("#world-map").vectorMap({
+            map: "world_mill",
+            regionsSelectable: true,
+            regionStyle: {
+                selected: {
+                    fill: "lightblue"
+                }
+            },
+            onRegionSelected: (e, code, isSelected, selectedRegions) => {
+                console.log(selectedRegions);
+            }
+        });
     }
 
     componentDidMount() {
