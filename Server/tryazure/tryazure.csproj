@@ -158,7 +158,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DataBase.cs" />
-    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\DataBaseGuyes.cs" />
+    <Compile Include="Models\RequestClasses.cs" />
     <Compile Include="Models\ResponseMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

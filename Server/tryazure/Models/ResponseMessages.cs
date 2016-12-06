@@ -13,6 +13,7 @@ namespace travelMap.Models
         }
         public string Message { get; set; }
     }
+
     public class OkMessage
     {
         public OkMessage( string message )
@@ -21,10 +22,12 @@ namespace travelMap.Models
         }
         public string Id { get; set; }
     }
+
     public class MapInfo
     {
         public List<string> Countries { get; set; }
     }
+
     public class Recommendations
     {
         public Recommendations( Dictionary<string, int> countries )
@@ -33,4 +36,14 @@ namespace travelMap.Models
         }
         public Dictionary<string, int> Countries;
     }
+
+    public class JSONInt
+    {
+        public JSONInt( int number )
+        {
+            Number = number;
+        }
+        public int Number { get; set; }
+    }
+
 }

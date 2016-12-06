@@ -20,7 +20,7 @@ namespace travelMap.Controllers
             var personFromDB = db.GetPersonFromDB( "Login", doc.Login );
             if ( personFromDB == null ) {
                 doc.Countries = new List<string>();
-                db.InsertAsync( doc );
+                db.InsertPerson( doc );
                 var id = db.GetPersonFromDB( "Login", doc.Login ).Id;
                 return Request.CreateResponse<OkMessage>( HttpStatusCode.OK, new OkMessage( id.ToString() ) );
             } else if ( doc.Email == personFromDB.Email ) {

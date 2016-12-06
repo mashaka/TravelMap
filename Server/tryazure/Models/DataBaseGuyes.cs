@@ -19,29 +19,20 @@ namespace travelMap.Models
         public string Gender { get; set; }
         public string Locale { get; set; }
         public List<string> Countries { get; set; }
-    }
-    public class PersonWithAge
-    {
-        public PersonWithAge(Person pers)
+        public int GetAge()
         {
-            Email = pers.Email;
-            Gender = pers.Gender;
-            Locale = pers.Locale;
-            DateTime a = new DateTime( pers.BirthYear, pers.BirthMonth, pers.BirthDay );
+            DateTime a = new DateTime( BirthYear, BirthMonth, BirthDay );
             DateTime b = DateTime.Now;
-            Age = ( b.Year - a.Year - 1 ) +
+            return ( b.Year - a.Year - 1 ) +
             ( ( ( b.Month > a.Month ) ||
             ( ( b.Month == a.Month ) && ( b.Day >= a.Day ) ) ) ? 1 : 0 );
         }
-        public string Email { get; set; }
-        public int Age { get; set; }
-        public string Gender { get; set; }
-        public string Locale { get; set; }
     }
-    public class ChangePersonInfo
+
+    public class Country
     {
-        public string Email { get; set; }
-        public string OldPassword { get; set; }
-        public string NewPassword { get; set; }
+        public ObjectId Id { get; set; }
+        public string Name { get; set; }
+        public List<string> ListOfId { get; set; }
     }
 }

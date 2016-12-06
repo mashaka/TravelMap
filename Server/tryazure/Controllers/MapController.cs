@@ -50,11 +50,58 @@ namespace travelMap.Controllers
             return Request.CreateResponse<Recommendations>( HttpStatusCode.OK, new Recommendations( countries ) );
         }
         [HttpPost]
+        [Route( "api/map/list" )]
+        public HttpResponseMessage GetListOfUsers( RequestInfo info )
+        {
+            //var objId = "58433e70112d77168cd68063";
+            //var objId = Request.Headers.Authorization.ToString();
+            string countryName = info.Name;
+            Country country = db.GetCountryFromDB( countryName );
+            if ( country == null ) {
+                var answerString = "Invalid country";
+                return Request.CreateResponse<ErrorMessage>( HttpStatusCode.BadRequest, new ErrorMessage( answerString ) );
+            }
+            List<string> users = country.ListOfId;
+            int answerCount = 0;
+            foreach( var id in users ) {
+                Person userFromCountry = db.GetPersonFromDBById( id );
+                if ( ( userFromCountry.Gender == info.Gender || info.Gender == "ANY" ) &&
+                    userFromCountry.GetAge() >= info.StartAge && userFromCountry.GetAge() <= info.FinishAge && 
+                    info.Locales.IndexOf( userFromCountry.Locale ) != -1) {
+                    answerCount++;
+                }
+            }
+            return Request.CreateResponse<JSONInt>( HttpStatusCode.OK, new JSONInt( answerCount ) );
+        }
+        //оптимизировать
+        //и допилить
+        [HttpPost]
+        [Route( "api/map/distribution" )]
+        public HttpResponseMessage GetDistribution( RequestInfo info )
+        {
+            //var objId = "58433e70112d77168cd68063";
+            //var objId = Request.Headers.Authorization.ToString();
+            List<Country> countries = db.GetAllCountries();
+            List<string> allUsers = new List<string>();
+            foreach( var country in countries ) {
+                List<string> guyes = country.ListOfId;
+                int numberOfGuyes = 0;
+                foreach( var guy in guyes ) {
+                    if (allUsers.IndexOf(guy) != -1 ) {
+                        numberOfGuyes++;
+                    }
+                }
+            }
+            return new HttpResponseMessage( HttpStatusCode.OK );
+        }
+
+
+        [HttpPost]
         [Route( "api/map/add" )]
         public HttpResponseMessage Add( MapInfo countries )
         {
             var objId = Request.Headers.Authorization.ToString();
-            //var objId = "58433e70112d77168cd68063";
+            //var objId = "5845f322112d764258959e27";
             if ( db.AddCountries( objId, "Countries", countries.Countries ) ) {
                 return new HttpResponseMessage( HttpStatusCode.OK );
             } else {

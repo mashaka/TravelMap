@@ -11,7 +11,7 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 <script>
     $(document).ready(function () {
-
+        register();
     });
     function GetPerson() {
         $.ajax({
@@ -26,10 +26,10 @@
     }
 
     function register() {
-        var user = {"Countries":["russia","usa"]}
+        var user = { "Name": "USA", "StartAge": 0, "FinishAge": 50, "Gender": "ANY", "Locales": ["CC"] }
 
         $.ajax({
-            url: '/api/map/',
+            url: '/api/map/list',
             type: 'POST',
             data: JSON.stringify(user),
             contentType: "application/json;charset=utf-8"
