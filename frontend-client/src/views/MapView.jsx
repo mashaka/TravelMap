@@ -1,19 +1,11 @@
 import React from "react"
-import { MapChoropleth } from "react-d3-map-choropleth"
-import * as TopoJson from "topojson"
 import "../styles/Fonts.scss"
 import "../styles/views/MapView.scss"
-import World from "../constants/world-50m.json"
 import Flags from "../constants/flags/flags.json"
 
 /* TODO(dubov94): set up for small screens. */
 export default class MapView extends React.Component {
     render() {
-        let mesh = TopoJson.mesh(
-            World, World.objects.countries, function(a, b) {
-                return a !== b
-            }
-        )
 
         const SexCheckbox = (tag, caption) => {
             let id = "side-bar__sex--" + tag
@@ -46,10 +38,7 @@ export default class MapView extends React.Component {
                         <label htmlFor="side-bar__locale">Country</label>
                     </div>
                 </ul>
-                {/* <MapChoropleth
-                    dataMesh={ mesh }
-                    projection={ "mercator" }
-                    showGraticule={ false } /> */}
+                <div id="world-map"></div>
             </div>
         )
     }
@@ -71,15 +60,20 @@ export default class MapView extends React.Component {
     }
 
     initializeAutoComplete() {
-        $(document).ready(function() {
-            $("input.autocomplete").autocomplete({
-                data: Flags
-            })
+        $("input.autocomplete").autocomplete({
+            data: Flags
         })
     }
 
+    initializeMap() {
+        $("#world-map").vectorMap({map: "world_mill"});
+    }
+
     componentDidMount() {
-        this.initializeSlider()
-        this.initializeAutoComplete()
+        $(document).ready(() => {
+            this.initializeSlider()
+            this.initializeAutoComplete()
+            this.initializeMap()
+        })
     }
 }

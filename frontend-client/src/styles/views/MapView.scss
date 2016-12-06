@@ -1,12 +1,14 @@
+@import "../Constants.scss";
+
 $side-bar-size: 300px;
 
-// {
-//     position: fixed;
-//     top: $nav-bar-size;
-//     right: 0;
-//     bottom: 0;
-//     left: $side-bar-size;
-// }
+#world-map{
+    position: fixed;
+    top: $nav-bar-size;
+    right: 0;
+    bottom: 0;
+    left: $side-bar-size;
+}
 
 .side-bar {
     $filter-margin: 20px;

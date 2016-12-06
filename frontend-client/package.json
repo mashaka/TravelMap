@@ -29,7 +29,6 @@
     "node-sass": "^3.8.0",
     "react": "^15.2.1",
     "react-addons-linked-state-mixin": "^15.2.1",
-    "react-d3-map-choropleth": "^0.5.1",
     "react-datepicker": "^0.34.0",
     "react-dom": "^15.2.1",
     "react-mixin": "^3.0.5",
@@ -40,8 +39,7 @@
     "redux-auth-wrapper": "^0.6.0",
     "redux-logger": "^2.6.1",
     "redux-router": "^2.1.1",
-    "redux-thunk": "^2.1.0",
-    "topojson": "^1.6.27"
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",

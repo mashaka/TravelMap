@@ -53,7 +53,7 @@ module.exports = {
             }
         }),
         new HtmlwebpackPlugin({
-            template: './src/index.html'
+            template: './src/template.html'
         })
     ]
 };
