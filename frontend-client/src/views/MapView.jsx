@@ -66,16 +66,34 @@ export default class MapView extends React.Component {
     }
 
     initializeMap() {
+        this.visited = ['RU', 'US']
+        this.recommendations = { UK: 0, CA: 25, FR: 75 }
+
+
         $("#world-map").vectorMap({
             map: "world_mill",
+            series: {
+                regions: [{
+                    values: this.recommendations,
+                    scale: ["#FFFFFF", "#FF0000"]
+                }]
+            },
             regionsSelectable: true,
             regionStyle: {
                 selected: {
-                    fill: "lightblue"
+                    fill: "green"
                 }
             },
+            selectedRegions: this.visited,
             onRegionSelected: (e, code, isSelected, selectedRegions) => {
-                console.log(selectedRegions);
+                if(isSelected) {
+                    console.log(code)
+                }
+            },
+            onRegionClick: (e, code) => {
+                if(this.visited.indexOf(code) !== -1) {
+                    return false
+                }
             }
         });
     }

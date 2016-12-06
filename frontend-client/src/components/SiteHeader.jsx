@@ -31,7 +31,7 @@ export default class SiteHeader extends React.Component {
                             <NavItem to="map" >
                                 My Map
                             </NavItem>
-                            <li>
+                            <li style={{ padding: '0 15px' }}>
                                 Shared Map
                             </li>
                             <li>
