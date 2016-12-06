@@ -102,35 +102,36 @@ export default class MapView extends React.Component {
     }
 
     initializeMap() {
-        this.recommendations = { FR: 75 }
-
-
-        $("#world-map").vectorMap({
-            map: "world_mill",
-            series: {
-                regions: [{
-                    values: this.recommendations,
-                    scale: ["#FFFFFF", "#FF0000"]
-                }]
-            },
-            regionsSelectable: true,
-            regionStyle: {
-                selected: {
-                    fill: "green"
+        // TODO fix the workaround.
+        setInterval(() => {
+            $("#world-map").vectorMap({
+                map: "world_mill",
+                // TODO: fix the workaround.
+                selectedRegions: this.props.visited.filter((code) => code.length === 2),
+                series: {
+                    regions: [{
+                        values: { FR: 75 },
+                        scale: ["#FFFFFF", "#FF0000"]
+                    }]
+                },
+                regionsSelectable: true,
+                regionStyle: {
+                    selected: {
+                        fill: "green"
+                    }
+                },
+                onRegionSelected: (e, code, isSelected, selectedRegions) => {
+                    if(isSelected && this.props.visited.indexOf(code) === -1) {
+                        this.props.actions.postVisited(this.props.token, code)
+                    }
+                },
+                onRegionClick: (e, code) => {
+                    if(this.props.visited.indexOf(code) !== -1) {
+                        return false
+                    }
                 }
-            },
-            selectedRegions: this.visited,
-            onRegionSelected: (e, code, isSelected, selectedRegions) => {
-                if(isSelected) {
-                    this.props.actions.postVisited(this.props.token, code)
-                }
-            },
-            onRegionClick: (e, code) => {
-                if(this.props.visited.indexOf(code) !== -1) {
-                    return false
-                }
-            }
-        });
+            })
+        }, 1000)
     }
 
     componentDidMount() {
