@@ -102,36 +102,38 @@ export default class MapView extends React.Component {
     }
 
     initializeMap() {
-        // TODO fix the workaround.
-        setInterval(() => {
-            $("#world-map").vectorMap({
-                map: "world_mill",
-                // TODO: fix the workaround.
-                selectedRegions: this.props.visited.filter((code) => code.length === 2),
-                series: {
-                    regions: [{
-                        values: { FR: 75 },
-                        scale: ["#FFFFFF", "#FF0000"]
-                    }]
-                },
-                regionsSelectable: true,
-                regionStyle: {
-                    selected: {
-                        fill: "green"
-                    }
-                },
-                onRegionSelected: (e, code, isSelected, selectedRegions) => {
-                    if(isSelected && this.props.visited.indexOf(code) === -1) {
-                        this.props.actions.postVisited(this.props.token, code)
-                    }
-                },
-                onRegionClick: (e, code) => {
-                    if(this.props.visited.indexOf(code) !== -1) {
-                        return false
-                    }
+        this.map = new jvm.Map({
+            container: $("#world-map"),
+            map: "world_mill",
+            series: {
+                regions: [{
+                    values: { FR: 75 },
+                    scale: ["#FFFFFF", "#FF0000"]
+                }]
+            },
+            regionsSelectable: true,
+            regionStyle: {
+                selected: {
+                    fill: "green"
                 }
-            })
-        }, 1000)
+            },
+            onRegionSelected: (e, code, isSelected, selectedRegions) => {
+                if(isSelected && this.props.visited.indexOf(code) === -1) {
+                    this.props.actions.postVisited(this.props.token, code)
+                }
+            },
+            onRegionClick: (e, code) => {
+                if(this.props.visited.indexOf(code) !== -1) {
+                    return false
+                }
+            }
+        })
+    }
+    
+    componentDidUpdate() {
+        if(this.map) {
+            this.map.setSelectedRegions(this.props.visited.filter((code) => code.length === 2))
+        }
     }
 
     componentDidMount() {
