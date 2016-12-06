@@ -1,22 +1,42 @@
 import React from "react"
+import update from "immutability-helper"
 import "../styles/Fonts.scss"
 import "../styles/views/MapView.scss"
 import Flags from "../constants/flags/flags.json"
 
 /* TODO(dubov94): set up for small screens. */
 export default class MapView extends React.Component {
-    render() {
+    constructor(...args) {
+        super(...args)
+        this.state = { 
+            male: true, 
+            female: false,
+            age: [18, 90],
+            locale: "Russia"
+        }
+    }
 
+    render() {
         const SexCheckbox = (tag, caption) => {
+            const setSex = (event) => {
+                let stateUpdate = {}
+                stateUpdate[tag] = update(this.state[tag], { $set: event.target.checked }) 
+                this.setState(stateUpdate)
+            }
             let id = "side-bar__sex--" + tag
             return (
                 <div>
                     <input
                         type="checkbox" id={ id }
-                        checked="checked" className="filled-in" />
+                        checked={ this.state[tag] } className="filled-in"
+                        onChange={ setSex } />
                     <label htmlFor={ id }>{ caption }</label>
                 </div>
             )
+        }
+
+        const setLocale = (event) => {
+            this.setState({ locale: update(this.state.locale, { $set: event.target.value }) })
         }
 
         /* TODO(dubov94): Split into components. */
@@ -34,7 +54,8 @@ export default class MapView extends React.Component {
                     <h6>Locale</h6>
                     <div className="side-bar__locale input-field col s12">
                         <input type="text" id="side-bar__locale"
-                            className="autocomplete" />
+                            className="autocomplete" value={ this.state.locale } 
+                            onChange={ setLocale } />
                         <label htmlFor="side-bar__locale">Country</label>
                     </div>
                 </ul>
@@ -46,7 +67,7 @@ export default class MapView extends React.Component {
     initializeSlider() {
         const slider = document.querySelector(".side-bar__age")
         noUiSlider.create(slider, {
-            start: [18, 90],
+            start: this.state.age,
             connect: true,
             step: 1,
             range: {
@@ -56,6 +77,9 @@ export default class MapView extends React.Component {
             format: wNumb({
                 decimals: 0
             })
+        })
+        slider.noUiSlider.on('update', (values, handle) => {
+            this.setState({ age: update(this.state.age, { $set: values.map((x) => parseInt(x)) }) })
         })
     }
 
@@ -87,7 +111,7 @@ export default class MapView extends React.Component {
             selectedRegions: this.visited,
             onRegionSelected: (e, code, isSelected, selectedRegions) => {
                 if(isSelected) {
-                    console.log(code)
+                    /* TODO: map/add */
                 }
             },
             onRegionClick: (e, code) => {
