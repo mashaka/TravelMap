@@ -11,9 +11,9 @@ const ChangeEmailForm = ({changeEmailCallback, changingEmail, errorChangingEmail
                 e.preventDefault();
                 changeEmailCallback(newEmail.value);
             }}>
-                <div className="input-field">
+                <div className="input-field col s12">
                     <input id="email" type="email" className="validate" ref={(input)=>newEmail=input} />
-                    <label for="email" data-error="wrong" data-success="right"> New email </label>
+                    <label htmlFor="email" data-error="wrong" data-success="right"> New email </label>
                 </div>
                 <button type="submit"
                         disabled={changingEmail} className="waves-effect waves-light btn">

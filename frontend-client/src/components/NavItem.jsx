@@ -6,8 +6,7 @@ import { Link, IndexLink, withRouter } from 'react-router'
 
 class NavItem extends Component {
     render () {
-        const { router } = this.props
-        const { index, to, children, ...props } = this.props
+        const { index, to, children, router } = this.props
 
         let isActive
         if( router.isActive('/',true) && index ) isActive = true
@@ -16,7 +15,7 @@ class NavItem extends Component {
 
         return (
             <li className={isActive ? 'active' : ''}>
-                <LinkComponent to={to} {...props}>{children}</LinkComponent>
+                <LinkComponent to={to}>{children}</LinkComponent>
             </li>
         )
     }

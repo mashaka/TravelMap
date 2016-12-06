@@ -1,21 +1,11 @@
 import React from "react"
 import { Link } from "react-router"
 import NavItem from "./NavItem"
-import ReactDOM from 'react-dom';
-import "materialize-css/dist/js/materialize.min.js"
+import ReactDOM from 'react-dom'
 
 import "../styles/components/Siteheader.scss"
 
 export default class SiteHeader extends React.Component {
-
-    componentDidMount() {
-        var element = ReactDOM.findDOMNode(this.refs.dropdown);
-
-        $(element).ready(function() {
-            $(element).dropdown();
-        });
-    }
-
     render() {
         return (
             <div>

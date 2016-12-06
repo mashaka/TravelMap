@@ -15,25 +15,25 @@ export default class SignUpForm extends React.Component {
         return (
             <div className="signup-form">
                 <form type="submit">
-                    <div className="input-field">
-                        <input id="email" type="text" className="validate" ref={(input)=>this.nickname = input}/>
-                        <label for="email"> Login </label>
+                    <div className="input-field col s12">
+                        <input id="nickname" type="text" className="validate" ref={(input)=>this.nickname = input}/>
+                        <label htmlFor="nickname"> Login </label>
                     </div>
-                    <div className="input-field">
+                    <div className="input-field col s12">
                         <input id="email" type="email" className="validate" ref={(input)=>this.email = input}/>
-                        <label for="email"> Email </label>
+                        <label htmlFor="email"> Email </label>
                     </div>
-                    <div className="input-field">
-                        <input id="email" type="password" className="validate" ref={(input)=>this.password = input}/>
-                        <label for="email"> Password </label>
+                    <div className="input-field col s12">
+                        <input id="password" type="password" className="validate" ref={(input)=>this.password = input}/>
+                        <label htmlFor="password"> Password </label>
                     </div>
                     <div>
                         <input name="sex" type="radio" id="sex-male" value="male" checked={this.props.gender == "male"}/>
-                        <label className="sex-label-element" for="sex-male" onClick={() => {
+                        <label className="sex-label-element" htmlFor="sex-male" onClick={() => {
                             this.props.chooseGender("male")
                         }}>Male</label>
                         <input name="sex" type="radio" id="sex-female" value="female" checked={this.props.gender == "female"}/>
-                        <label className="sex-label-element" for="sex-female" onClick={() => {
+                        <label className="sex-label-element" htmlFor="sex-female" onClick={() => {
                             this.props.chooseGender("female")
                         }}>Female</label>
                     </div>
@@ -51,7 +51,7 @@ export default class SignUpForm extends React.Component {
                         <select className="browser-default" defaultValue="" ref={(input) => this.locale = input}>
                             <option value="" disabled>Choose your country</option>
                             {Object.keys(Countries).map( (key) => (
-                                <option value={key}>{Countries[key]}</option>
+                                <option value={key} key={key}>{Countries[key]}</option>
                             ) ) }
                         </select>
                     </div>
