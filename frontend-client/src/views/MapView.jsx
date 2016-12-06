@@ -122,7 +122,7 @@ export default class MapView extends React.Component {
             selectedRegions: this.visited,
             onRegionSelected: (e, code, isSelected, selectedRegions) => {
                 if(isSelected) {
-                    /* TODO: map/add */
+                    this.props.actions.postVisited(this.props.token, code)
                 }
             },
             onRegionClick: (e, code) => {
