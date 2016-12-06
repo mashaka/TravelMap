@@ -15,14 +15,14 @@ const ChangePasswordForm = ({changePasswordCallback, changingPassword,
                 oldPassword.value = "";
                 newPassword.value = "";
             }}>
-                <div className="input-field">
-                    <input id="email" type="password" ref={(input)=>oldPassword=input} />
-                    <label for="email" data-error="wrong" data-success="right"> Old password </label>
+                <div className="input-field col s12">
+                    <input id="old-password" type="password" ref={(input)=>oldPassword=input} />
+                    <label htmlFor="old-password" data-error="wrong" data-success="right"> Old password </label>
                 </div>
 
-                <div className="input-field">
-                    <input id="email" type="password" ref={(input)=>newPassword=input} />
-                    <label for="email" data-error="wrong" data-success="right"> New password </label>
+                <div className="input-field col s12">
+                    <input id="new-password" type="password" ref={(input)=>newPassword=input} />
+                    <label htmlFor="new-password" data-error="wrong" data-success="right"> New password </label>
                 </div>
 
                 <button type="submit" className="waves-effect waves-light btn"

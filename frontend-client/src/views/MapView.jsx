@@ -48,7 +48,7 @@ export default class MapView extends React.Component {
                             className="autocomplete" />
                         <label htmlFor="side-bar__locale">Country</label>
                     </div>
-                </ul> async
+                </ul>
                 {/* <MapChoropleth
                     dataMesh={ mesh }
                     projection={ "mercator" }
