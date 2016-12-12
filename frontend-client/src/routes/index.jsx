@@ -1,10 +1,11 @@
 import React from "react";
-import {Route, IndexRedirect } from "react-router";
+import {Route, IndexRedirect } from "react-router"
 
-import App from "../containers/App";
+import App from "../containers/App"
 import LoginView from "../views/LoginView"
 import SignUpView from "../views/SignUpView"
-import MapView from "../views/MapView"
+import MyMapView from "../views/MyMapView"
+import SharedMapView from "../views/SharedMapView"
 import SiteView from "../views/SiteView"
 import UserProfileView from "../views/UserProfileView"
 import EnterView from "../views/EnterView"
@@ -14,8 +15,8 @@ export default(
     <Route path="/" component={App}>
         <IndexRedirect to="home" />
         <Route component={requireAuthentication(SiteView)}>
-            <Route path="map" component={MapView} />
-            {/* <Route path="shared" component={MapView} /> */}
+            <Route path="my-map" component={MyMapView} />
+            <Route path="shared-map" component={SharedMapView} />
             <Route path="home" component={UserProfileView} />
         </Route>
         <Route component={EnterView} >

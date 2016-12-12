@@ -36,12 +36,12 @@ export default class SiteHeader extends React.Component {
                             <i className="material-icons">menu</i>
                         </a>
                         <ul className="right">
-                            <NavItem to="map" >
+                            <NavItem to="my-map" >
                                 My Map
                             </NavItem>
-                            <li style={{ padding: '0 15px' }}>
+                            <NavItem to="shared-map">
                                 Shared Map
-                            </li>
+                            </NavItem>
                             <li>
                                 <a className="dropdown-button" href="#" data-activates="profile-dropdown__menu" ref="dropdown">
                                     <img className="circle profile-dropdown__image" src="https://placehold.it/100" />

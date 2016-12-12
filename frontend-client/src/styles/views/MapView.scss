@@ -2,7 +2,7 @@
 
 $side-bar-size: 300px;
 
-#world-map{
+#world-map {
     position: fixed;
     top: $nav-bar-size;
     right: 0;
@@ -24,7 +24,7 @@ $side-bar-size: 300px;
         margin: $filter-margin $filter-margin 30px;
     }
 
-    &__locale {
-        margin-top: 1.5 * $filter-margin;
+    &__country {
+        margin: 1.5 * $filter-margin 0;
     }
 }
