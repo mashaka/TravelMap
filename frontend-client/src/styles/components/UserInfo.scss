@@ -1,12 +1,13 @@
 .user-info-card {
-  width: 100%;
-  text-align: center;
-  position: relative;
-  left: 50%;
-  transform: translate(-50%, 0);
-  font-size: 1em;
+  font-size: 2em;
+
+  .collection-item {
+    line-height: 4rem;
+  }
 }
 
 .collection-item img {
-  height: 0.8em;
+  height: 1em;
+  position: relative;
+  top: 0.1em;
 }

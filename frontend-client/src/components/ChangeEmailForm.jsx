@@ -2,7 +2,7 @@ import React from "react"
 import ErrorView from "../views/ErrorView"
 import "../styles/components/ChangeEmailForm.scss"
 
-const ChangeEmailForm = ({changeEmailCallback, changingEmail, errorChangingEmail, changingEmailSuccess }) => {
+const ChangeEmailForm = ({currentEmail, changeEmailCallback, changingEmail, errorChangingEmail, changingEmailSuccess }) => {
     let newEmail;
     return (
         <div>
@@ -12,8 +12,8 @@ const ChangeEmailForm = ({changeEmailCallback, changingEmail, errorChangingEmail
                 changeEmailCallback(newEmail.value);
             }}>
                 <div className="input-field col s12">
-                    <input id="email" type="email" className="validate" ref={(input)=>newEmail=input} />
-                    <label htmlFor="email" data-error="wrong" data-success="right"> New email </label>
+                    <input id="email" type="email" defaultValue={currentEmail} className="validate" ref={(input)=>newEmail=input} />
+                    <label htmlFor="email" data-error="wrong" data-success="right"></label>
                 </div>
                 <button type="submit"
                         disabled={changingEmail} className="waves-effect waves-light btn">
