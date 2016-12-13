@@ -10,12 +10,19 @@ const { MAP_FETCH_VISITED_REQUEST,
         MAP_POST_VISITED_REQUEST,
         MAP_POST_VISITED_FAILURE,
         MAP_POST_VISITED_SUCCESS,
+        MAP_FETCH_RECOMMENDED_REQUEST,
+        MAP_FETCH_RECOMMENDED_FAILURE,
+        MAP_FETCH_RECOMMENDED_SUCCESS,
+        MAP_FETCH_DISTRIBUTION_REQUEST,
+        MAP_FETCH_DISTRIBUTION_FAILURE,
+        MAP_FETCH_DISTRIBUTION_SUCCESS,
         APIURL } = constants
 
-export function fetchVisited(token) {
+
+function authorizedGetRequestFactory(address, token, requestCb, failureCb, successCb) {
     return function(dispatch) {
-        dispatch({ type: MAP_FETCH_VISITED_REQUEST });
-        return fetch(APIURL + "/map", {
+        requestCb(dispatch)
+        return fetch(address, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -30,30 +37,29 @@ export function fetchVisited(token) {
             return response.json()
         }).then(response => {
             if (!response) {
-                dispatch({ type: MAP_FETCH_VISITED_FAILURE })
+                failureCb(dispatch)
                 dispatch(errorInHttpRequest({ Message: "Error" }))
             } else {
-                dispatch({ type: MAP_FETCH_VISITED_SUCCESS, payload: response })
+                successCb(dispatch, response)
             }
         })
     }
 }
 
-export function postVisited(token, code) {
+function authorizedPostRequestFactory(address, token, body, requestCb, failureCb, successCb) {
     return function(dispatch) {
-        dispatch({ type: MAP_POST_VISITED_REQUEST });
-        return fetch(APIURL + "/map/add", {
+        requestCb(dispatch)
+        return fetch(address, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json",
                 "Authorization": token
             },
-            body: JSON.stringify({ Countries: [code] })
+            body: body
         }).then(response => {
             if( response.status === 200 ) {
-                dispatch({ type: MAP_POST_VISITED_SUCCESS })
-                dispatch(fetchVisited(token))
+                successCb(dispatch)
                 return null
             } else {
                 dispatch(addErrorRespondStatus(response.status))
@@ -61,9 +67,38 @@ export function postVisited(token, code) {
             }
         }).then(response => {
             if(response) {
-                dispatch({ type: MAP_POST_VISITED_FAILURE });
+                failureCb(dispatch)
                 dispatch(errorInHttpRequest(response))
             }
         })
     }
+}
+
+export function fetchVisited(token) {
+    return authorizedGetRequestFactory(APIURL + "/map", token,
+        (dispatch) => { dispatch({ type: MAP_FETCH_VISITED_REQUEST }) },
+        (dispatch) => { dispatch({ type: MAP_FETCH_VISITED_FAILURE }) },
+        (dispatch, response) => { dispatch({ type: MAP_FETCH_VISITED_SUCCESS, payload: response }) })
+}
+
+export function postVisited(token, code) {
+    return authorizedPostRequestFactory(APIURL + "/map/add", token, JSON.stringify({ Countries: [code] }),
+        (dispatch) => { dispatch({ type: MAP_POST_VISITED_REQUEST }) },
+        (dispatch) => { dispatch({ type: MAP_POST_VISITED_FAILURE }) },
+        (dispatch) => { dispatch({ type: MAP_POST_VISITED_SUCCESS })
+                        dispatch(fetchVisited(token)) })
+}
+
+export function fetchRecommended(token) {
+    return authorizedGetRequestFactory(APIURL + "/map/recommended", token,
+        (dispatch) => { dispatch({ type: MAP_FETCH_RECOMMENDED_REQUEST }) },
+        (dispatch) => { dispatch({ type: MAP_FETCH_RECOMMENDED_FAILURE }) },
+        (dispatch, response) => { dispatch({ type: MAP_FETCH_RECOMMENDED_SUCCESS, payload: response }) })
+}
+
+export function fetchDistribution(token) {
+    return authorizedGetRequestFactory(APIURL + "/map/distribution", token,
+        (dispatch) => { dispatch({ type: MAP_FETCH_DISTRIBUTION_REQUEST }) },
+        (dispatch) => { dispatch({ type: MAP_FETCH_DISTRIBUTION_FAILURE }) },
+        (dispatch, response) => { dispatch({ type: MAP_FETCH_DISTRIBUTION_SUCCESS, payload: response }) })
 }

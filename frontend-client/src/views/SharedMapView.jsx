@@ -7,6 +7,15 @@ import * as mapActions from "../actions/mapActions"
 import { bindActionCreators } from "redux"
 
 /* TODO(dubov94): set up for small screens. */
+@connect(
+    (state) => ({
+        token: state.auth.token,
+        distribution: state.map.distribution
+    }),
+    (dispatch) => ({
+        actions: bindActionCreators(mapActions, dispatch)
+    })
+)
 export default class SharedMapView extends React.Component {
     constructor(...args) {
         super(...args)
@@ -87,6 +96,7 @@ export default class SharedMapView extends React.Component {
     }
 
     componentDidMount() {
+        this.props.actions.fetchDistribution(this.props.token)
         $(document).ready(() => {
             this.initializeSlider()
             this.initializeMap()

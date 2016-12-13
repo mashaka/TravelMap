@@ -10,7 +10,8 @@ import { bindActionCreators } from "redux"
 @connect(
     (state) => ({
         token: state.auth.token,
-        visited: state.map.visited
+        visited: state.map.visited,
+        recommended: state.map.recommended
     }),
     (dispatch) => ({
         actions: bindActionCreators(mapActions, dispatch)
@@ -35,7 +36,7 @@ export default class MyMapView extends React.Component {
         return (
             <div>
                 <ul id="side-bar" className="side-bar side-nav fixed">
-                    <h6>Add country</h6>
+                    <h5>Add country</h5>
                     <div className="side-bar__country input-field col s12">
                         <input type="text" id="side-bar__country"
                             className="autocomplete" />
@@ -54,7 +55,7 @@ export default class MyMapView extends React.Component {
             map: "world_mill",
             series: {
                 regions: [{
-                    values: { FR: 75 },
+                    values: this.props.recommended,
                     scale: ["#FFFFFF", "#FF0000"]
                 }]
             },
@@ -91,6 +92,7 @@ export default class MyMapView extends React.Component {
 
     componentDidMount() {
         this.props.actions.fetchVisited(this.props.token)
+        this.props.actions.fetchRecommended(this.props.token)
         $(document).ready(() => {
             this.initializeAutoComplete()
             this.initializeMap()
