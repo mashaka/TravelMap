@@ -1,16 +1,20 @@
 import numpy as np
 import pandas as pd
 import os.path
+import json
 
 DATA_DIR = os.path.join('..', 'dataGrabber', 'pythonScripts')
-TRAIN_FILE = 'train.csv'
+TRAIN_FILE = 'train_new.csv'
+
+HOME_COUNTRY = 'home_country'
 
 HOME_SIMILAR_BONUS = 3
 
 
 def read_data():
-    df = pd.read_csv(os.path.join(DATA_DIR, TRAIN_FILE), sep=' ')
-    return df.values
+    df = pd.read_csv(os.path.join(DATA_DIR, TRAIN_FILE), sep='\t')
+    df.drop
+    return list(df.columns.values)[1:], df.values
 
 
 def distance(a, b):
@@ -20,17 +24,18 @@ def distance(a, b):
     return dist
 
 
-def answer(user):
-    data = read_data()
-    p = [0 for _ in range(len(user) - 1)]
+def answer(user_json):
+    user_dict = json.loads(user_json)
+    country_codes, data = read_data()
+    # Reorder to match train data features
+    user = [user_dict[HOME_COUNTRY]] + [user_dict[c] for c in country_codes]
+    p = {c: 0 for c in country_codes}
     for i_a, a in enumerate(data[:-1]):
         dist = distance(a, user)
         for i in range(1, len(a)):
             if a[i] != user[i] and user[i] == 0:
-                p[i-1] += dist
-    if sum(p) != 0:
-        p = [float(i) / sum(p) for i in p]
+                p[country_codes[i-1]] += dist
+    if sum(p.values()) != 0:
+        sum_p = sum(p.values())
+        p = {c: float(p[c]) / sum_p for c in p}
     return p
-
-
-print(answer(np.random.randint(2, size=253)))
