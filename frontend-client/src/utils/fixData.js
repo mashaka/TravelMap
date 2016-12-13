@@ -14,6 +14,6 @@ export default (x) => {
         }
         return x
     } else {
-        throw 'Argument is not either array nor plain object!'
+        throw 'Argument is neither array nor plain object!'
     }
 }
