@@ -18,39 +18,11 @@ const { MAP_FETCH_VISITED_REQUEST,
         MAP_FETCH_DISTRIBUTION_SUCCESS,
         APIURL } = constants
 
-
-function authorizedGetRequestFactory(address, token, requestCb, failureCb, successCb) {
+function authorizedRequestFactory(type, address, token, requestCb, failureCb, successCb, body) {
     return function(dispatch) {
         requestCb(dispatch)
         return fetch(address, {
-            method: "GET",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json",
-                "Authorization": token
-            }
-        }).then(response => {
-            if (response.status !== 200) {
-                dispatch(addErrorRespondStatus(response.status))
-                return null
-            }
-            return response.json()
-        }).then(response => {
-            if (!response) {
-                failureCb(dispatch)
-                dispatch(errorInHttpRequest({ Message: "Error" }))
-            } else {
-                successCb(dispatch, response)
-            }
-        })
-    }
-}
-
-function authorizedPostRequestFactory(address, token, body, requestCb, failureCb, successCb) {
-    return function(dispatch) {
-        requestCb(dispatch)
-        return fetch(address, {
-            method: "POST",
+            method: type,
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json",
@@ -58,47 +30,63 @@ function authorizedPostRequestFactory(address, token, body, requestCb, failureCb
             },
             body: body
         }).then(response => {
-            if( response.status === 200 ) {
-                successCb(dispatch)
-                return null
+            if (response.status === 200) {
+                response.text().then(function(text) {
+                    let data = text === '' ? null : JSON.parse(text)
+                    console.log(address, data)
+                    successCb(dispatch, data)
+                })
             } else {
-                dispatch(addErrorRespondStatus(response.status))
-                return response.json()
-            }
-        }).then(response => {
-            if(response) {
                 failureCb(dispatch)
-                dispatch(errorInHttpRequest(response))
+                dispatch(addErrorRespondStatus(response.status))
+                dispatch(errorInHttpRequest({ Message: "Error" }))
             }
         })
     }
 }
 
 export function fetchVisited(token) {
-    return authorizedGetRequestFactory(APIURL + "/map", token,
+    return authorizedRequestFactory("GET", APIURL + "/map", token,
         (dispatch) => { dispatch({ type: MAP_FETCH_VISITED_REQUEST }) },
         (dispatch) => { dispatch({ type: MAP_FETCH_VISITED_FAILURE }) },
         (dispatch, response) => { dispatch({ type: MAP_FETCH_VISITED_SUCCESS, payload: response }) })
 }
 
 export function postVisited(token, code) {
-    return authorizedPostRequestFactory(APIURL + "/map/add", token, JSON.stringify({ Countries: [code] }),
+    return authorizedRequestFactory("POST", APIURL + "/map/add", token,
         (dispatch) => { dispatch({ type: MAP_POST_VISITED_REQUEST }) },
         (dispatch) => { dispatch({ type: MAP_POST_VISITED_FAILURE }) },
         (dispatch) => { dispatch({ type: MAP_POST_VISITED_SUCCESS })
-                        dispatch(fetchVisited(token)) })
+                        dispatch(fetchVisited(token)) }, JSON.stringify({ Countries: [code] }))
 }
 
 export function fetchRecommended(token) {
-    return authorizedGetRequestFactory(APIURL + "/map/recommended", token,
+    return authorizedRequestFactory("GET", APIURL + "/map/recommended", token,
         (dispatch) => { dispatch({ type: MAP_FETCH_RECOMMENDED_REQUEST }) },
         (dispatch) => { dispatch({ type: MAP_FETCH_RECOMMENDED_FAILURE }) },
         (dispatch, response) => { dispatch({ type: MAP_FETCH_RECOMMENDED_SUCCESS, payload: response }) })
 }
 
-export function fetchDistribution(token) {
-    return authorizedGetRequestFactory(APIURL + "/map/distribution", token,
+export function fetchDistribution(token, filter) {
+    let convertSex = () => {
+        if(filter.male && filter.female) {
+            return "ANY"
+        } else if(filter.male) {
+            return "male"
+        } else if(filter.female) {
+            return "female"
+        } else {
+            return null
+        }
+    }
+    let sex = convertSex()
+    let body = {
+        StartAge: filter.age[0],
+        FinishAge: filter.age[1],
+        Gender: sex
+    }
+    return authorizedRequestFactory("POST", APIURL + "/map/distribution", token,
         (dispatch) => { dispatch({ type: MAP_FETCH_DISTRIBUTION_REQUEST }) },
         (dispatch) => { dispatch({ type: MAP_FETCH_DISTRIBUTION_FAILURE }) },
-        (dispatch, response) => { dispatch({ type: MAP_FETCH_DISTRIBUTION_SUCCESS, payload: response }) })
+        (dispatch, response) => { dispatch({ type: MAP_FETCH_DISTRIBUTION_SUCCESS, payload: response }) }, JSON.stringify(body))
 }

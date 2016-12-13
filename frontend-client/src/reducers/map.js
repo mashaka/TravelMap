@@ -27,15 +27,13 @@ export default createReducer(initialState, {
         })
     },
     [MAP_FETCH_RECOMMENDED_SUCCESS]: (state, payload) => {
-        console.log('MAP_FETCH_RECOMMENDED_SUCCESS', payload)
         return Object.assign({}, state, {
             recommended: payload.Countries
         })
     },
     [MAP_FETCH_DISTRIBUTION_SUCCESS]: (state, payload) => {
-        console.log('MAP_FETCH_DISTRIBUTION_SUCCESS', payload)
         return Object.assign({}, state, {
-            distribution: payload
+            distribution: payload.Countries
         })
     }
 })

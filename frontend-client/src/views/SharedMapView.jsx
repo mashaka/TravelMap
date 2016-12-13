@@ -5,6 +5,7 @@ import "../styles/views/MapView.scss"
 import { connect } from "react-redux"
 import * as mapActions from "../actions/mapActions"
 import { bindActionCreators } from "redux"
+import n from "../utils/fixData.js"
 
 /* TODO(dubov94): set up for small screens. */
 @connect(
@@ -21,9 +22,13 @@ export default class SharedMapView extends React.Component {
         super(...args)
         this.state = { 
             male: true, 
-            female: false,
-            age: [18, 90]
+            female: true,
+            age: [0, 120]
         }
+    }
+
+    fetchFiltered() {
+        this.props.actions.fetchDistribution(this.props.token, this.state)
     }
 
     render() {
@@ -48,7 +53,7 @@ export default class SharedMapView extends React.Component {
         /* TODO(dubov94): Split into components. */
         return (
             <div>
-                <ul id="side-bar" className="side-bar side-nav fixed">
+                <div id="side-bar" className="side-bar side-nav fixed">
                     <h5 className="center">Filters</h5>
                     <h6>Sex</h6>
                     <div className="side-bar__sex">
@@ -57,7 +62,8 @@ export default class SharedMapView extends React.Component {
                     </div>
                     <h6>Age</h6>
                     <div className="side-bar__age"></div>
-                </ul>
+                    <a className="waves-effect waves-light btn" onClick={ this.fetchFiltered.bind(this) }>Fetch</a>
+                </div>
                 <div id="world-map"></div>
             </div>
         )
@@ -88,15 +94,21 @@ export default class SharedMapView extends React.Component {
             map: "world_mill",
             series: {
                 regions: [{
-                    values: { FR: 75 },
                     scale: ["#FFFFFF", "#FF0000"]
                 }]
             }
         })
     }
 
+    componentDidUpdate() {
+        if(this.map) {
+            this.map.series.regions[0].clear()
+            this.map.series.regions[0].setValues(n(this.props.distribution))
+        }
+    }
+
     componentDidMount() {
-        this.props.actions.fetchDistribution(this.props.token)
+        this.fetchFiltered()
         $(document).ready(() => {
             this.initializeSlider()
             this.initializeMap()

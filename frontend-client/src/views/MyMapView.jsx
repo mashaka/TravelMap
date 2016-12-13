@@ -6,6 +6,7 @@ import Tags from "../constants/flags/tags.json"
 import { connect } from "react-redux"
 import * as mapActions from "../actions/mapActions"
 import { bindActionCreators } from "redux"
+import n from "../utils/fixData.js"
 
 @connect(
     (state) => ({
@@ -35,7 +36,7 @@ export default class MyMapView extends React.Component {
 
         return (
             <div>
-                <ul id="side-bar" className="side-bar side-nav fixed">
+                <div id="side-bar" className="side-bar side-nav fixed">
                     <h5>Add country</h5>
                     <div className="side-bar__country input-field col s12">
                         <input type="text" id="side-bar__country"
@@ -43,7 +44,7 @@ export default class MyMapView extends React.Component {
                         <label htmlFor="side-bar__country">Country</label>
                     </div>
                     <a className="waves-effect waves-light btn" onClick={ addCountry }>Add</a>
-                </ul>
+                </div>
                 <div id="world-map"></div>
             </div>
         )
@@ -53,17 +54,16 @@ export default class MyMapView extends React.Component {
         this.map = new jvm.Map({
             container: $("#world-map"),
             map: "world_mill",
-            series: {
-                regions: [{
-                    values: this.props.recommended,
-                    scale: ["#FFFFFF", "#FF0000"]
-                }]
-            },
             regionsSelectable: true,
             regionStyle: {
                 selected: {
                     fill: "green"
                 }
+            },
+            series: {
+                regions: [{
+                    scale: ["#FFFFFF", "#FF0000"]
+                }]
             },
             onRegionSelected: (e, code, isSelected, selectedRegions) => {
                 if(isSelected && this.props.visited.indexOf(code) === -1) {
@@ -83,10 +83,12 @@ export default class MyMapView extends React.Component {
             data: Flags
         })
     }
-    
+
     componentDidUpdate() {
         if(this.map) {
-            this.map.setSelectedRegions(this.props.visited.filter((code) => code.length === 2))
+            this.map.setSelectedRegions(n(this.props.visited))
+            this.map.series.regions[0].clear()
+            this.map.series.regions[0].setValues(n(this.props.recommended))
         }
     }
 
