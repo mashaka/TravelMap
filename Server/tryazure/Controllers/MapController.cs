@@ -85,7 +85,6 @@ namespace travelMap.Controllers
             var listOfCountries = allCountries.List;
             List<string> allUsers = new List<string>();
             Dictionary<string, int> distribution = new Dictionary<string, int>();
-            int totalNumberOfGuyes = 0;
             foreach( var country in listOfCountries ) {
                 int numberOfGuyes = 0;
                 string countryName = country.Key;
@@ -93,16 +92,19 @@ namespace travelMap.Controllers
                 if ( dbCountry != null ) {
                     List<string> guyes = dbCountry.ListOfId;
                     foreach ( var guy in guyes ) {
+                        Person userFromCountry = db.GetPersonFromDBById( guy );
+                        if ( ( userFromCountry.Gender == info.Gender || info.Gender == "ANY" ) &&
+                            userFromCountry.GetAge() >= info.StartAge && userFromCountry.GetAge() <= info.FinishAge ) {
+                            numberOfGuyes++;
+                        }
                         if ( allUsers.IndexOf( guy ) == -1 ) {
                             allUsers.Add( guy );
-                            numberOfGuyes++;
                         }
                     }
                 }
                 distribution.Add( countryName, numberOfGuyes );
-                totalNumberOfGuyes += numberOfGuyes;
             }
-            distribution.Add( "TOTAL", totalNumberOfGuyes );
+            distribution.Add( "TOTAL", allUsers.Count );
             return Request.CreateResponse<Recommendations>( HttpStatusCode.OK, new Recommendations( distribution ) );
         }
 
