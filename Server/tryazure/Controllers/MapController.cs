@@ -46,7 +46,7 @@ namespace travelMap.Controllers
                     countries.Add( person.Countries[i], 0 );
                 }
             }
-            RecomnnededCountries.Recommend( ref countries );
+            countries = RecomnnededCountries.Recommend( person.Locale, countries );
             return Request.CreateResponse<Recommendations>( HttpStatusCode.OK, new Recommendations( countries ) );
         }
         [HttpPost]
@@ -81,18 +81,31 @@ namespace travelMap.Controllers
         {
             //var objId = "58433e70112d77168cd68063";
             //var objId = Request.Headers.Authorization.ToString();
-            List<Country> countries = db.GetAllCountries();
+            ListOfCountries allCountries = new ListOfCountries();
+            var listOfCountries = allCountries.List;
             List<string> allUsers = new List<string>();
-            foreach( var country in countries ) {
-                List<string> guyes = country.ListOfId;
+            Dictionary<string, int> distribution = new Dictionary<string, int>();
+            foreach( var country in listOfCountries ) {
                 int numberOfGuyes = 0;
-                foreach( var guy in guyes ) {
-                    if (allUsers.IndexOf(guy) != -1 ) {
-                        numberOfGuyes++;
+                string countryName = country.Key;
+                Country dbCountry = db.GetCountryFromDB( countryName );
+                if ( dbCountry != null ) {
+                    List<string> guyes = dbCountry.ListOfId;
+                    foreach ( var guy in guyes ) {
+                        Person userFromCountry = db.GetPersonFromDBById( guy );
+                        if ( ( userFromCountry.Gender == info.Gender || info.Gender == "ANY" ) &&
+                            userFromCountry.GetAge() >= info.StartAge && userFromCountry.GetAge() <= info.FinishAge ) {
+                            numberOfGuyes++;
+                        }
+                        if ( allUsers.IndexOf( guy ) == -1 ) {
+                            allUsers.Add( guy );
+                        }
                     }
                 }
+                distribution.Add( countryName, numberOfGuyes );
             }
-            return new HttpResponseMessage( HttpStatusCode.OK );
+            distribution.Add( "TOTAL", allUsers.Count );
+            return Request.CreateResponse<Recommendations>( HttpStatusCode.OK, new Recommendations( distribution ) );
         }
 
 

@@ -26,10 +26,10 @@
     }
 
     function register() {
-        var user = { "Name": "USA", "StartAge": 0, "FinishAge": 50, "Gender": "ANY", "Locales": ["CC"] }
+        var user = { "StartAge": 0, "FinishAge": 50, "Gender": "ANY" }
 
         $.ajax({
-            url: '/api/map/list',
+            url: '/api/map/distribution',
             type: 'POST',
             data: JSON.stringify(user),
             contentType: "application/json;charset=utf-8"
