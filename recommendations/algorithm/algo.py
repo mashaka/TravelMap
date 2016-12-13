@@ -3,10 +3,11 @@ import pandas as pd
 import os.path
 import json
 
-DATA_DIR = os.path.join('..', 'dataGrabber', 'pythonScripts')
+DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'dataGrabber', 'pythonScripts')
 TRAIN_FILE = 'train_new.csv'
 
 HOME_COUNTRY = 'home_country'
+VISITED_COUNTRIES = 'visited_countries'
 
 HOME_SIMILAR_BONUS = 3
 
@@ -28,14 +29,22 @@ def answer(user_json):
     user_dict = json.loads(user_json)
     country_codes, data = read_data()
     # Reorder to match train data features
-    user = [user_dict[HOME_COUNTRY]] + [user_dict[c] for c in country_codes]
-    p = {c: 0 for c in country_codes}
+    user = [user_dict[HOME_COUNTRY]]
+    p = {}
+    for c in country_codes:
+        if c in user_dict[VISITED_COUNTRIES]:
+            user.append(user_dict[VISITED_COUNTRIES])
+        else:
+            user.append(0)
+        p[c] = 0
     for i_a, a in enumerate(data[:-1]):
         dist = distance(a, user)
         for i in range(1, len(a)):
             if a[i] != user[i] and user[i] == 0:
                 p[country_codes[i-1]] += dist
-    if sum(p.values()) != 0:
-        sum_p = sum(p.values())
-        p = {c: float(p[c]) / sum_p for c in p}
+    # sum_p = sum(p.values())
+    # if sum_p != 0:
+    #    p = {c: (p[c] / sum_p) for c in p}
     return p
+
+print(answer(input()))

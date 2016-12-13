@@ -33,21 +33,21 @@ namespace travelMap.Controllers
         public HttpResponseMessage GetRecommendedCountries()
         {
             RecommendedCountries RecomnnededCountries = new RecommendedCountries();
-            //var objId = "58433e70112d77168cd68063";
-            var objId = Request.Headers.Authorization.ToString();
-            var person = db.GetPersonFromDBById( objId );
-            if ( person == null ) {
-                var answerString = "Invalid user id";
-                return Request.CreateResponse<ErrorMessage>( HttpStatusCode.BadRequest, new ErrorMessage( answerString ) );
-            }
+            ////var objId = "58433e70112d77168cd68063";
+            //var objId = Request.Headers.Authorization.ToString();
+            //var person = db.GetPersonFromDBById( objId );
+            //if ( person == null ) {
+            //    var answerString = "Invalid user id";
+            //    return Request.CreateResponse<ErrorMessage>( HttpStatusCode.BadRequest, new ErrorMessage( answerString ) );
+            //}
             Dictionary<string, int> countries = new Dictionary<string, int>();
-            if (person.Countries != null ) {
-                for (int i = 0; i < person.Countries.Count; i++ ) {
-                    countries.Add( person.Countries[i], 0 );
-                }
-            }
-            countries = RecomnnededCountries.Recommend( person.Locale, countries );
-            return Request.CreateResponse<Recommendations>( HttpStatusCode.OK, new Recommendations( countries ) );
+            //if (person.Countries != null ) {
+            //    for (int i = 0; i < person.Countries.Count; i++ ) {
+            //        countries.Add( person.Countries[i], 0 );
+            //    }
+            //}
+            countries = RecomnnededCountries.Recommend("RU", countries);
+            return Request.CreateResponse<Recommendations>(HttpStatusCode.OK, new Recommendations(countries));
         }
         [HttpPost]
         [Route( "api/map/list" )]
