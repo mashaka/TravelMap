@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Collections.Generic;
 using travelMap.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization;
 using travelMap.Functions;
+
 
 namespace travelMap.Controllers
 {
@@ -83,29 +85,27 @@ namespace travelMap.Controllers
             //var objId = Request.Headers.Authorization.ToString();
             ListOfCountries allCountries = new ListOfCountries();
             var listOfCountries = allCountries.List;
-            List<string> allUsers = new List<string>();
-            Dictionary<string, int> distribution = new Dictionary<string, int>();
-            foreach( var country in listOfCountries ) {
-                int numberOfGuyes = 0;
-                string countryName = country.Key;
-                Country dbCountry = db.GetCountryFromDB( countryName );
-                if ( dbCountry != null ) {
-                    List<string> guyes = dbCountry.ListOfId;
-                    foreach ( var guy in guyes ) {
-                        Person userFromCountry = db.GetPersonFromDBById( guy );
-                        if ( ( userFromCountry.Gender == info.Gender || info.Gender == "ANY" ) &&
-                            userFromCountry.GetAge() >= info.StartAge && userFromCountry.GetAge() <= info.FinishAge ) {
-                            numberOfGuyes++;
-                        }
-                        if ( allUsers.IndexOf( guy ) == -1 ) {
-                            allUsers.Add( guy );
+            List<Person> allPersonsFromDB = db.GetAllPersons();
+            int totalGuysNumber = 0;
+            SortedDictionary<string, int> distribution = new SortedDictionary<string, int>();
+            foreach( var person in allPersonsFromDB ) {
+                if ( ( person.Gender == info.Gender || info.Gender == "ANY" ) &&
+                            person.GetAge() >= info.StartAge && person.GetAge() <= info.FinishAge ) {
+                    totalGuysNumber++;
+                    List<string> visitedCountries = person.Countries;
+                    foreach ( var countryName in visitedCountries ) {
+                        if ( listOfCountries.ContainsKey( countryName ) ) {
+                            if ( distribution.ContainsKey( countryName ) ) {
+                                distribution[countryName]++;
+                            } else {
+                                distribution.Add( countryName, 1 );
+                            }
                         }
                     }
                 }
-                distribution.Add( countryName, numberOfGuyes );
             }
-            distribution.Add( "TOTAL", allUsers.Count );
-            return Request.CreateResponse<Recommendations>( HttpStatusCode.OK, new Recommendations( distribution ) );
+            return Request.CreateResponse<Distribution>( HttpStatusCode.OK, 
+                new Distribution( totalGuysNumber, distribution ) );
         }
 
 

@@ -158,6 +158,17 @@ namespace travelMap.Models
             }
         }
 
+        public List<Person> GetAllPersons()
+        {
+            var filter = new BsonDocument();
+            var personsFromDB = collectionForPersons.Find( filter );
+            if ( personsFromDB.Count() != 0 ) {
+                return personsFromDB.ToList();
+            } else {
+                return null;
+            }
+        }
+    
         public void InsertPerson(Person person)
         {
             collectionForPersons.InsertOne(person);

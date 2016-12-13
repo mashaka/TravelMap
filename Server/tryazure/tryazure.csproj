@@ -160,7 +160,7 @@
     </Compile>
     <Compile Include="Models\Countries.cs" />
     <Compile Include="Models\DataBase.cs" />
-    <Compile Include="Models\DataBaseGuyes.cs" />
+    <Compile Include="Models\DataBaseGuys.cs" />
     <Compile Include="Models\RequestClasses.cs" />
     <Compile Include="Models\ResponseMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -46,4 +46,15 @@ namespace travelMap.Models
         public int Number { get; set; }
     }
 
+    public class Distribution
+    {
+        public Distribution( int count, SortedDictionary<string,int> _distribution )
+        {
+            TotalNumber = count;
+            Countries = _distribution;
+        }
+        public int TotalNumber;
+        public SortedDictionary<string, int> Countries;
+    }
+
 }
