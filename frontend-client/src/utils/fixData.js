@@ -1,3 +1,4 @@
+// TODO: remove after database values are consistent.
 export default (x) => {
     if($.isArray(x)) {
         return x.filter((code) => code.length === 2)

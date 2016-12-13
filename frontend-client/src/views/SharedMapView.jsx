@@ -96,6 +96,9 @@ export default class SharedMapView extends React.Component {
                 regions: [{
                     scale: ["#FFFFFF", "#FF0000"]
                 }]
+            },
+            onRegionTipShow: (event, element, code) => {
+                element.html(element.html() + ' (' + (this.props.distribution[code] || 0) + ')')
             }
         })
     }
